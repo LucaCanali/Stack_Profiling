@@ -13,8 +13,8 @@ See README files in each directory for further details
      Use together with Flame Graphs
 
 - ORA_KStackProfiler 
-  -> a simple kernel stack profiler extended with the option of sampling Oracle wait event
-     information from SGA
+  -> a simple kernel stack profiler extended with the option of sampling Oracle wait
+     event information from SGA
      Use to drill down into Oracle wait events and troubleshoot processes that are often Off-CPU/Kernel-busy 
      Use together with Flame Graphs
 
