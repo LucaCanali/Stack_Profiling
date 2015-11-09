@@ -1,0 +1,74 @@
+
+ptrace_profiler - a simple stack profiler for userspace and kernel stack extended with 
+                   the option to add Oracle wait event information from SGA
+
+Author: Luca.Canali@cern.ch
+Created: November 2015
+
+Notes:
+
+requires libunwind and libunwind-devel
+If you are compiling libunwind from source, you may need also:
+export LD_LIBRARY_PATH=/usr/local/lib
+        
+Use this tool to investigate both userspace and kernel space profiles of Linux processes
+What it does: Sampling of userspace using libunwind and ptrace_profiler
+              Sampling of Linux kernel stack and OS state from /proc/<pid>/stack and /proc/<pid>/state
+              Optional sampling of Oracle wait event information from memory X$KSUSE.KSUSEOPC and X$KSUSE.KSUSETIM
+This tool is intended to be used together with flame graph visualization: https://github.com/brendangregg/FlameGraph
+              
+Notes: 
+ - consider this tool as proof of concept/study material
+ - *beware* of the impact of using ptrace, the process will be suspended during stack unwinding, 
+   this can slow the process down considerably  depending on the sampling frequency.
+ - use low sampling frequency, for example use 500 ms as sampling delay to start with.
+ - for userspace and CPU-bound processes consider perf events for stack profiling as it considerably is more lightweight
+ - stacks are captured "in flight" using the /proc filesystem this minimizes the risk but also reduces accuracy
+ - userspace and kernel stack, process state and wait event deails are read in four different steps, this can introduce errors
+ - the tool traces only one process (although it could be adapted to trace multiple pids)
+ - the tool does not support threads. It is mainly focused to tracing Oracle single-threaded processes
+                
+Example of usage:
+
+1. Run make to build the executable: ptrace_profiler
+
+2. Run stack sampling. Example:
+
+./ora_kstackprofiler --pid 583 --delay 500 --count 100 > my_stack_sample.txt
+
+3. Process the output with flame graphs for visualization - https://github.com/brendangregg/FlameGraph
+
+Examples :
+cat my_stack_sample.txt| ../FlameGraph/stackcollapse-stap.pl|../FlameGraph/flamegraph.pl > my_stack_sample.svg
+
+Optional, if using this for tracing Oracle:
+
+1b. Run the scripts in the oracle_scripts directory 
+     - run eventsname.sql using sql*plus to generate the file eventsname.sed translating event# into event names 
+
+     - run find_pid_ksustim_ksuseopc.sql using sql*plus to find the pid of the Oracle session to trace
+       Example: 
+
+SQL> @find_pid_ksustim_ksuseopc.sql
+This script finds the OS pid and address of X$KSUSE.KSUSEOPC and X$KSUSE.KSUSETIM
+for a given Oracle session. To be used together with ora_kstackprofiler
+Run as user SYS
+
+Enter Oracle SID to be investigated: 145
+OS pid = 29698, ksuseopc = 5796061762, ksusetim = 5796061792
+
+2b. Stack profiling extended with Oracle wait event data:
+
+Example of the command line:
+
+./ora_kstackprofiler --pid 583 --delay 100 --count 1000 --ksuseopc 5794944562 --ksusetim 5794944592 > ora_stack_slob_test.txt
+
+3b. Process the output with flame graphs for visualization - https://github.com/brendangregg/FlameGraph
+
+Examples :
+cat ora_stack_slob_test.txt| ../FlameGraph/stackcollapse-stap.pl|../FlameGraph/flamegraph.pl > ora_stack_slob_test_vanilla.svg
+
+cat ora_stack_slob_test.txt| grep -v 0xffffffffffffffff | sed -f oracle_scripts/eventsname.sed | ../FlameGraph/stackcollapse-stap.pl| \
+../FlameGraph/flamegraph.pl --title "Userspace stack, Kernel stack, OS State and Wait event profiling of Oracle random I/O (SLOB workload, low latency I/O)" > ora_stack_slob_test_fixed.svg
+
+

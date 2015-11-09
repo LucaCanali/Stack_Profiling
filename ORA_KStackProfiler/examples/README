@@ -1,0 +1,40 @@
+
+ora_kstackprofiler - a simple kernel stack profiler extended with 
+                     the option to add Oracle wait event information from X$ tables
+
+Author: Luca.Canali@cern.ch
+Created: November 2015
+
+Example of usage:
+
+1. Run make to build the executable: ora_kstackprofiler
+
+2. Run the scripts in the oracle_scripts directory 
+     - run eventsname.sql using sql*plus to generate the file eventsname.sed translating event# into event names 
+
+     - run find_pid_ksustim_ksuseopc.sql using sql*plus to find the pid of the Oracle session to trace
+       Example: 
+
+SQL> @find_pid_ksustim_ksuseopc.sql
+This script finds the OS pid and address of X$KSUSE.KSUSEOPC and X$KSUSE.KSUSETIM
+for a given Oracle session. To be used together with ora_kstackprofiler
+Run as user SYS
+
+Enter Oracle SID to be investigated: 145
+OS pid = 29698, ksuseopc = 5796061762, ksusetim = 5796061792
+
+3. stack profiling extended with Oracle wait event data:
+
+Example of the command line:
+
+./ora_kstackprofiler --pid 583 --delay 100 --count 1000 --ksuseopc 5794944562 --ksusetim 5794944592 > ora_stack_slob_test.txt
+
+4. Process the output with flame graphs for visualization - https://github.com/brendangregg/FlameGraph
+
+Examples :
+cat ora_stack_slob_test.txt| ../FlameGraph/stackcollapse-stap.pl|../FlameGraph/flamegraph.pl > ora_stack_slob_test_vanilla.svg
+
+cat ora_stack_slob_test.txt| grep -v 0xffffffffffffffff | sed -f oracle_scripts/eventsname.sed | ../FlameGraph/stackcollapse-stap.pl| \
+../FlameGraph/flamegraph.pl --title "Kernel stack, OS State and Wait event profiling of Oracle random I/O (SLOB workload, low latency I/O)" > ora_stack_slob_test_fixed.svg
+
+

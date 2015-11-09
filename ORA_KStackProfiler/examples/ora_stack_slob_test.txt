@@ -1,0 +1,8938 @@
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_put_req+0x38/0x60
+do_io_submit+0x134/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+call_function_single_interrupt+0xe/0x20
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+mptscsih_qcmd+0x4c4/0x8a0
+[<ffffffffffffffff>]
+[<ffffffffffffffff>]
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+cfq_set_request+0x425/0x560
+elv_set_request+0x1b/0x30
+get_request+0x302/0x3c0
+get_request_wait+0x2a/0x1d0
+blk_queue_bio+0x99/0x610
+generic_make_request+0x240/0x5a0
+submit_bio+0x70/0x120
+__blockdev_direct_IO_newtrunc+0xc7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+sysret_careful+0x14/0x17
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+call_function_single_interrupt+0xe/0x20
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+tag_pages_for_writeback+0x72/0xc0
+write_cache_pages+0x2da/0x4c0
+generic_writepages+0x24/0x30
+do_writepages+0x21/0x40
+__filemap_fdatawrite_range+0x5b/0x60
+filemap_write_and_wait_range+0x5a/0x90
+generic_file_aio_read+0x418/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+tag_pages_for_writeback+0x72/0xc0
+write_cache_pages+0x2da/0x4c0
+generic_writepages+0x24/0x30
+do_writepages+0x21/0x40
+__filemap_fdatawrite_range+0x5b/0x60
+filemap_write_and_wait_range+0x5a/0x90
+generic_file_aio_read+0x418/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+generic_make_request+0xd1/0x5a0
+submit_bio+0x70/0x120
+__blockdev_direct_IO_newtrunc+0xc7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__blockdev_direct_IO_newtrunc+0x120/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+do_io_submit+0x743/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+retint_careful+0x14/0x32
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+retint_careful+0x14/0x32
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+cfq_set_request+0x425/0x560
+elv_set_request+0x1b/0x30
+get_request+0x302/0x3c0
+get_request_wait+0x2a/0x1d0
+blk_queue_bio+0x99/0x610
+generic_make_request+0x240/0x5a0
+submit_bio+0x70/0x120
+__blockdev_direct_IO_newtrunc+0xc7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+sysret_careful+0x14/0x17
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+do_io_submit+0x743/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+retint_careful+0x14/0x32
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+sysret_careful+0x14/0x17
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+retint_careful+0x14/0x32
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+mptscsih_qcmd+0x4c4/0x8a0
+[<ffffffffffffffff>]
+[<ffffffffffffffff>]
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+bio_alloc_bioset+0x3e/0xf0
+bio_alloc+0x15/0x30
+do_direct_IO+0x711/0xfa0
+__blockdev_direct_IO_newtrunc+0x346/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+do_io_submit+0x743/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0xd8/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+mptscsih_qcmd+0x4c4/0x8a0
+[<ffffffffffffffff>]
+[<ffffffffffffffff>]
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+bio_alloc_bioset+0x3e/0xf0
+bio_alloc+0x15/0x30
+do_direct_IO+0x711/0xfa0
+__blockdev_direct_IO_newtrunc+0x346/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+mptscsih_qcmd+0x4c4/0x8a0
+[<ffffffffffffffff>]
+[<ffffffffffffffff>]
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+do_io_submit+0x743/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+retint_careful+0x14/0x32
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+sysret_careful+0x14/0x17
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+retint_careful+0x14/0x32
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+do_io_submit+0x743/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+common_interrupt+0xe/0x13
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+tag_pages_for_writeback+0x72/0xc0
+write_cache_pages+0x2da/0x4c0
+generic_writepages+0x24/0x30
+do_writepages+0x21/0x40
+__filemap_fdatawrite_range+0x5b/0x60
+filemap_write_and_wait_range+0x5a/0x90
+generic_file_aio_read+0x418/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+tag_pages_for_writeback+0x72/0xc0
+write_cache_pages+0x2da/0x4c0
+generic_writepages+0x24/0x30
+do_writepages+0x21/0x40
+__filemap_fdatawrite_range+0x5b/0x60
+filemap_write_and_wait_range+0x5a/0x90
+generic_file_aio_read+0x418/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+sysret_careful+0x14/0x17
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+tag_pages_for_writeback+0x72/0xc0
+write_cache_pages+0x2da/0x4c0
+generic_writepages+0x24/0x30
+do_writepages+0x21/0x40
+__filemap_fdatawrite_range+0x5b/0x60
+filemap_write_and_wait_range+0x5a/0x90
+generic_file_aio_read+0x418/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_put_req+0x38/0x60
+do_io_submit+0x16f/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+mptscsih_qcmd+0x4c4/0x8a0
+[<ffffffff8128daa9>]
+[<ffffffffffffffff>]
+[<ffffffffffffffff>]
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0xd8/0x170
+do_io_submit+0x308/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+sched_clock+0x9/0x10
+blk_rq_init+0x9b/0xb0
+get_request+0x1eb/0x3c0
+get_request_wait+0x2a/0x1d0
+blk_queue_bio+0x99/0x610
+generic_make_request+0x240/0x5a0
+submit_bio+0x70/0x120
+__blockdev_direct_IO_newtrunc+0xc7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+bio_alloc_bioset+0x3e/0xf0
+bio_alloc+0x15/0x30
+do_direct_IO+0x711/0xfa0
+__blockdev_direct_IO_newtrunc+0x346/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+do_io_submit+0x743/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0x12f/0x1a0
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+bio_alloc_bioset+0x3e/0xf0
+bio_alloc+0x15/0x30
+do_direct_IO+0x711/0xfa0
+__blockdev_direct_IO_newtrunc+0x346/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+generic_make_request+0xd1/0x5a0
+submit_bio+0x70/0x120
+__blockdev_direct_IO_newtrunc+0xc7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+sysret_careful+0x14/0x17
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+get_request+0x1cf/0x3c0
+get_request_wait+0x2a/0x1d0
+blk_queue_bio+0x99/0x610
+generic_make_request+0x240/0x5a0
+submit_bio+0x70/0x120
+__blockdev_direct_IO_newtrunc+0xc7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+bio_alloc_bioset+0x3e/0xf0
+bio_alloc+0x15/0x30
+do_direct_IO+0x711/0xfa0
+__blockdev_direct_IO_newtrunc+0x346/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+bio_alloc_bioset+0x3e/0xf0
+bio_alloc+0x15/0x30
+do_direct_IO+0x711/0xfa0
+__blockdev_direct_IO_newtrunc+0x346/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+mptscsih_qcmd+0x4c4/0x8a0
+[<ffffffffa008b452>]
+[mptspi]
+scsi_dispatch_cmd+0xe5/0x310
+scsi_request_fn+0x5be/0x750
+__blk_run_queue+0x31/0x40
+cfq_insert_request+0x469/0x5b0
+elv_insert+0xa8/0x190
+__elv_add_request+0x40/0x90
+blk_queue_bio+0x11c/0x610
+generic_make_request+0x240/0x5a0
+submit_bio+0x70/0x120
+__blockdev_direct_IO_newtrunc+0xc7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+get_request+0x1cf/0x3c0
+get_request_wait+0x2a/0x1d0
+blk_queue_bio+0x99/0x610
+generic_make_request+0x240/0x5a0
+submit_bio+0x70/0x120
+__blockdev_direct_IO_newtrunc+0xc7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+mempool_alloc+0x8d/0x140
+do_io_submit+0x743/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+tag_pages_for_writeback+0x72/0xc0
+write_cache_pages+0x2da/0x4c0
+generic_writepages+0x24/0x30
+do_writepages+0x21/0x40
+__filemap_fdatawrite_range+0x5b/0x60
+filemap_write_and_wait_range+0x5a/0x90
+generic_file_aio_read+0x418/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+read_events+0x295/0x450
+sys_io_getevents+0x56/0xb0
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Sleeping (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+mptscsih_qcmd+0x4c4/0x8a0
+[<ffffffffffffffff>]
+[<ffffffffffffffff>]
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+retint_careful+0x14/0x32
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__blockdev_direct_IO_newtrunc+0xb7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+do_sync_read+0xfa/0x140
+vfs_read+0xb5/0x1a0
+sys_pread64+0x7a/0x90
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+On CPU (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+mptscsih_qcmd+0x4c4/0x8a0
+[<ffffffffffffffff>]
+[<ffffffffffffffff>]
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+retint_careful+0x14/0x32
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+On CPU (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Disk sleep (OS state)
+event#=153 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+generic_make_request+0xd1/0x5a0
+submit_bio+0x70/0x120
+__blockdev_direct_IO_newtrunc+0xc7d/0x1270
+__blockdev_direct_IO+0x77/0xe0
+blkdev_direct_IO+0x57/0x60
+generic_file_aio_read+0x6bb/0x700
+blkdev_aio_read+0x51/0x80
+aio_rw_vect_retry+0x84/0x200
+aio_run_iocb+0x64/0x170
+do_io_submit+0x291/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+__cond_resched+0x2a/0x40
+kmem_cache_alloc+0xed/0x190
+__aio_get_req+0x26/0x190
+do_io_submit+0x187/0x940
+sys_io_submit+0x10/0x20
+system_call_fastpath+0x16/0x1b
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
+0xffffffffffffffff
+Running or runnable (OS state)
+event#=158 (Oracle state)
+1
+
