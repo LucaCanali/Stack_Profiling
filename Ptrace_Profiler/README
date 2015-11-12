@@ -31,10 +31,11 @@ Notes:
 Example of usage:
 
 1. Run make to build the executable: ptrace_profiler
+   if needed also run: export LD_LIBRARY_PATH=/usr/local/lib
 
 2. Run stack sampling. Example:
 
-./ora_kstackprofiler --pid 583 --delay 500 --count 100 > my_stack_sample.txt
+./ora_kstackprofiler --pid 1234 --delay 500 --count 100 > my_stack_sample.txt
 
 3. Process the output with flame graphs for visualization - https://github.com/brendangregg/FlameGraph
 
@@ -55,20 +56,23 @@ for a given Oracle session. To be used together with ora_kstackprofiler
 Run as user SYS
 
 Enter Oracle SID to be investigated: 145
-OS pid = 29698, ksuseopc = 5796061762, ksusetim = 5796061792
+OS pid = 1234, ksuseopc = 5796061762, ksusetim = 5796061792
 
 2b. Stack profiling extended with Oracle wait event data:
 
 Example of the command line:
 
-./ora_kstackprofiler --pid 583 --delay 100 --count 1000 --ksuseopc 5794944562 --ksusetim 5794944592 > ora_stack_slob_test.txt
+./ora_kstackprofiler --pid 1234 --delay 100 --count 1000 --ksuseopc 5796061762 --ksusetim 5796061792 > ora_slob_slowio_userspace3.txt
 
 3b. Process the output with flame graphs for visualization - https://github.com/brendangregg/FlameGraph
 
 Examples :
-cat ora_stack_slob_test.txt| ../FlameGraph/stackcollapse-stap.pl|../FlameGraph/flamegraph.pl > ora_stack_slob_test_vanilla.svg
+cat my_stack_ora_sample.txt| ../FlameGraph/stackcollapse-stap.pl|../FlameGraph/flamegraph.pl > ora_stack_slob_test_vanilla.svg
 
-cat ora_stack_slob_test.txt| grep -v 0xffffffffffffffff | sed -f oracle_scripts/eventsname.sed | ../FlameGraph/stackcollapse-stap.pl| \
-../FlameGraph/flamegraph.pl --title "Userspace stack, Kernel stack, OS State and Wait event profiling of Oracle random I/O (SLOB workload, low latency I/O)" > ora_stack_slob_test_fixed.svg
+Additional data processing for improved graphs:
+
+cat my_stack_ora_sample.txt| grep -v 0xffffffffffffffff | sed 's/State:\t//g'| sed 's/\[<.*>] //g' | \
+sed -f oracle_scripts/eventsname.sed | ../FlameGraph/stackcollapse-stap.pl | \
+../FlameGraph/flamegraph.pl --title "Kernel stack, OS State and Wait event profiling" > ora_slob_slowio_userspace3.svg
 
 

@@ -1,6 +1,6 @@
 
-ora_kstackprofiler - a simple kernel stack profiler extended with 
-                     the option of sampling Oracle wait event information from SGA
+ora_kstackprofiler - a simple kernel stack profiler extended with the 
+                     option of sampling Oracle wait event information from SGA
                      
 Author: Luca.Canali@cern.ch
 Created: November 2015
@@ -22,7 +22,7 @@ Notes:
                 
 Example of usage:
 
-1. Run make to build the executable: ora_kstackprofiler
+1. Run "make" to build the executable: ora_kstackprofiler
 
 2. Run the scripts in the oracle_scripts directory 
      - run eventsname.sql using sql*plus to generate the file eventsname.sed translating event# into event names 
@@ -36,19 +36,23 @@ for a given Oracle session. To be used together with ora_kstackprofiler
 Run as user SYS
 
 Enter Oracle SID to be investigated: 145
-OS pid = 29698, ksuseopc = 5796061762, ksusetim = 5796061792
+OS pid = 1234, ksuseopc = 5796061762, ksusetim = 5796061792
 
-3. stack profiling extended with Oracle wait event data:
+3. Gather stack profiling extended with Oracle wait event data:
 
 Example of the command line:
 
-./ora_kstackprofiler --pid 583 --delay 100 --count 1000 --ksuseopc 5794944562 --ksusetim 5794944592 > ora_stack_slob_test.txt
+./ora_kstackprofiler --pid 1234 --delay 100 --count 1000 --ksuseopc 5796061762 --ksusetim 5796061792 > stack_profile.txt
 
 4. Process the output with flame graphs for visualization - https://github.com/brendangregg/FlameGraph
 
 Examples :
-cat ora_stack_slob_test.txt| ../FlameGraph/stackcollapse-stap.pl|../FlameGraph/flamegraph.pl > ora_stack_slob_test_vanilla.svg
+cat ora_stack_slob_test.txt| ../FlameGraph/stackcollapse-stap.pl|../FlameGraph/flamegraph.pl > stack_profile_vanilla.svg
 
-cat ora_stack_slob_test.txt| grep -v 0xffffffffffffffff | sed -f oracle_scripts/eventsname.sed | ../FlameGraph/stackcollapse-stap.pl| \
-../FlameGraph/flamegraph.pl --title "Kernel stack, OS State and Wait event profiling of Oracle random I/O (SLOB workload, low latency I/O)" > ora_stack_slob_test_fixed.svg
+Additional data processing for improved graphs:
+
+cat ora_stack_slob_test.txt| grep -v 0xffffffffffffffff | sed 's/State:\t//g'| sed 's/\[<.*>] //g' | \
+sed -f oracle_scripts/eventsname.sed | ../FlameGraph/stackcollapse-stap.pl | \
+../FlameGraph/flamegraph.pl --title "Kernel stack, OS State and Wait event profiling" > stack_profile_edited.svg
+
 

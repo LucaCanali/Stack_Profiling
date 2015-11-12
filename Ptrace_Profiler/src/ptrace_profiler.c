@@ -1,17 +1,16 @@
 /*
  * ptrace_profiler - a simple stack profiler for userspace and kernel stack extended with 
  *                    the option to add Oracle wait event information from SGA
+ *                     
+ *                     Author: Luca.Canali@cern.ch
+ *                     Created: November 2015
  *
- *                    Author: Luca.Canali@cern.ch
- *                    Created: November 2015
+ *                     Notes and dependencies:
+ *                         - requires libunwind and libunwind-devel
+ *                             - if you are compiling libunwind from source, you may need to set:
+ *                                   export LD_LIBRARY_PATH=/usr/local/lib
  *
- *                    Notes:
- *
- *                    requires libunwind and libunwind-devel
- *                    If you are compiling libunwind from source, you may need also:
- *                    export LD_LIBRARY_PATH=/usr/local/lib
- *
- *                    */
+ *                                    */
 
 #include <signal.h>
 #include <stdio.h>
@@ -122,9 +121,9 @@ static int parse_options(int argc, char **argv)
 }
 
 void sigint_trap() {
-	detach_process(pid);
-	printf("Exit because of SIGINT.\n");
-	exit(-1);
+    detach_process(pid);
+    printf("Exit because of SIGINT.\n");
+    exit(-1);
 }
 
 int main(int argc, char **argv)
@@ -136,8 +135,8 @@ int main(int argc, char **argv)
         exit(-1);
     }
      
-	signal(SIGINT, sigint_trap); 
-	 
+    signal(SIGINT, sigint_trap); 
+     
     if (stack_profile(pid, delay_in_ms*1000, num_samples, ksuseopc_addr, ksusetim_addr) <  0) {
         printf("Error in stack profiling\n");
         exit(-1);

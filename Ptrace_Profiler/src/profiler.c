@@ -80,11 +80,11 @@ int read_ksuse(int pid, int *ksuseopc_addr, int *ksusetim_addr)
     ksusetim=*(int *) buf2;
     
     /* X$KSUSE.ksusetim is the time in microseconds since last wait. 
-       When X$KSUSE.ksusetim >0 the session is not waiting 
-       ignore edge cases of sessions transitioning state, 
-       i.e. X$KSUSE.ksusetim=0 (musec) and process just switched on CPU 
-       This is a workaround as one should rather check X$KSLWT.KSLWTINWAIT
-     */
+ *        When X$KSUSE.ksusetim >0 the session is not waiting 
+ *               ignore edge cases of sessions transitioning state, 
+ *                      i.e. X$KSUSE.ksusetim=0 (musec) and process just switched on CPU 
+ *                             This is a workaround as one should rather check X$KSLWT.KSLWTINWAIT
+ *                                  */
     if (ksusetim>0) {
         return 0; /* on CPU */
     } else {
@@ -98,7 +98,11 @@ int stack_profile(int pid, int sleep_micro, int num_samples, int *ksuseopc_addr,
    int i;
    char procstate;
    int event;
+   char command_stack[128];
+   char command_status[128];
    
+   sprintf(command_stack, "cat /proc/%d/stack", pid);
+   sprintf(command_status, "grep -m 1 State /proc/%d/status", pid);
    
     if (unwind_initialize(pid) < 0)  {
         detach_process(pid);
@@ -109,18 +113,11 @@ int stack_profile(int pid, int sleep_micro, int num_samples, int *ksuseopc_addr,
 
         /* note, data collection is not atomic, this can introduce errors */
 
-        if ((procstate = proc_stat(pid)) < 0)
-            return -1;
-
-        if (print_kernel_stack(pid) < 0)
-            return -1;
-
+        if (system(command_stack) != 0)   /* read kernel stack */
+            exit(-1);
+			
 		if (attach_process(pid) < 0)
             return -1;
-
-        if ((ksuseopc_addr != NULL) &&  (ksusetim_addr != NULL)) 
-            if ((event = read_ksuse(pid, ksuseopc_addr, ksusetim_addr)) < 0) 
-                return -1;
 
 		if (unwind(pid) < 0)  {
            detach_process(pid);
@@ -130,35 +127,32 @@ int stack_profile(int pid, int sleep_micro, int num_samples, int *ksuseopc_addr,
         if (detach_process(pid) < 0)
            return -1;
 	  
-        switch(procstate) {
-            case 'R':
-                printf("Running or runnable (OS state)\n");
-                break;
-            case 'S':
-                printf("Sleeping (OS state)\n");
-                break;
-            case 'D':
-                printf("Disk sleep (OS state)\n");
-                break;
-            default: 
-                printf("%c (OS state)\n:", procstate);
-                break;
+        fflush(stdout);
+        if (system(command_status) != 0)  /* read process state */
+            exit(-1);
+       
+        /* optionally read Oracle wait event info if the addresses are provided */
+        if ((ksuseopc_addr != NULL) &&  (ksusetim_addr != NULL)) {
+
+            if ((event = read_ksuse(pid, ksuseopc_addr, ksusetim_addr)) < 0) 
+                return -1;
+
+            if (event > 0) 
+                printf("event#=%d (Oracle state)\n", event);
+            else 
+                printf("On CPU (Oracle state)\n");          
+                            
         }
-
-		if ((ksuseopc_addr != NULL) &&  (ksusetim_addr != NULL))
-               if (event > 0) {
-                   printf("event#=%d (Oracle state)\n", event);
-               } else {
-                   printf("On CPU (Oracle state)\n");          
-               }
-            
+		
         printf("1\n\n");
-
+        fflush(stdout);
+		
         usleep(sleep_micro);
     }
             
     unwind_cleanup();
     return 0;
 }
+
 
 

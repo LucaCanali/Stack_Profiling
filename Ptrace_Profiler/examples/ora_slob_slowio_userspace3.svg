@@ -1,0 +1,2435 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="1200" height="1218" onload="init(evt)" viewBox="0 0 1200 1218" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
+<defs >
+	<linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
+		<stop stop-color="#eeeeee" offset="5%" />
+		<stop stop-color="#eeeeb0" offset="95%" />
+	</linearGradient>
+</defs>
+<style type="text/css">
+	.func_g:hover { stroke:black; stroke-width:0.5; cursor:pointer; }
+</style>
+<script type="text/ecmascript">
+<![CDATA[
+	var details, searchbtn, matchedtxt, svg;
+	function init(evt) { 
+		details = document.getElementById("details").firstChild; 
+		searchbtn = document.getElementById("search");
+		matchedtxt = document.getElementById("matched");
+		svg = document.getElementsByTagName("svg")[0];
+		searching = 0;
+	}
+
+	// mouse-over for info
+	function s(node) {		// show
+		info = g_to_text(node);
+		details.nodeValue = "Function: " + info;
+	}
+	function c() {			// clear
+		details.nodeValue = ' ';
+	}
+
+	// ctrl-F for search
+	window.addEventListener("keydown",function (e) {
+		if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+			e.preventDefault();
+			search_prompt();
+		}
+	})
+
+	// functions
+	function find_child(parent, name, attr) {
+		var children = parent.childNodes;
+		for (var i=0; i<children.length;i++) {
+			if (children[i].tagName == name)
+				return (attr != undefined) ? children[i].attributes[attr].value : children[i];
+		}
+		return;
+	}
+	function orig_save(e, attr, val) {
+		if (e.attributes["_orig_"+attr] != undefined) return;
+		if (e.attributes[attr] == undefined) return;
+		if (val == undefined) val = e.attributes[attr].value;
+		e.setAttribute("_orig_"+attr, val);
+	}
+	function orig_load(e, attr) {
+		if (e.attributes["_orig_"+attr] == undefined) return;
+		e.attributes[attr].value = e.attributes["_orig_"+attr].value;
+		e.removeAttribute("_orig_"+attr);
+	}
+	function g_to_text(e) {
+		var text = find_child(e, "title").firstChild.nodeValue;
+		return (text)
+	}
+	function g_to_func(e) {
+		var func = g_to_text(e);
+		if (func != null)
+			func = func.replace(/ .*/, "");
+		return (func);
+	}
+	function update_text(e) {
+		var r = find_child(e, "rect");
+		var t = find_child(e, "text");
+		var w = parseFloat(r.attributes["width"].value) -3;
+		var txt = find_child(e, "title").textContent.replace(/\([^(]*\)/,"");
+		t.attributes["x"].value = parseFloat(r.attributes["x"].value) +3;
+		
+		// Smaller than this size won't fit anything
+		if (w < 2*12*0.59) {
+			t.textContent = "";
+			return;
+		}
+		
+		t.textContent = txt;
+		// Fit in full text width
+		if (/^ *$/.test(txt) || t.getSubStringLength(0, txt.length) < w)
+			return;
+		
+		for (var x=txt.length-2; x>0; x--) {
+			if (t.getSubStringLength(0, x+2) <= w) { 
+				t.textContent = txt.substring(0,x) + "..";
+				return;
+			}
+		}
+		t.textContent = "";
+	}
+
+	// zoom
+	function zoom_reset(e) {
+		if (e.attributes != undefined) {
+			orig_load(e, "x");
+			orig_load(e, "width");
+		}
+		if (e.childNodes == undefined) return;
+		for(var i=0, c=e.childNodes; i<c.length; i++) {
+			zoom_reset(c[i]);
+		}
+	}
+	function zoom_child(e, x, ratio) {
+		if (e.attributes != undefined) {
+			if (e.attributes["x"] != undefined) {
+				orig_save(e, "x");
+				e.attributes["x"].value = (parseFloat(e.attributes["x"].value) - x - 10) * ratio + 10;
+				if(e.tagName == "text") e.attributes["x"].value = find_child(e.parentNode, "rect", "x") + 3;
+			}
+			if (e.attributes["width"] != undefined) {
+				orig_save(e, "width");
+				e.attributes["width"].value = parseFloat(e.attributes["width"].value) * ratio;
+			}
+		}
+		
+		if (e.childNodes == undefined) return;
+		for(var i=0, c=e.childNodes; i<c.length; i++) {
+			zoom_child(c[i], x-10, ratio);
+		}
+	}
+	function zoom_parent(e) {
+		if (e.attributes) {
+			if (e.attributes["x"] != undefined) {
+				orig_save(e, "x");
+				e.attributes["x"].value = 10;
+			}
+			if (e.attributes["width"] != undefined) {
+				orig_save(e, "width");
+				e.attributes["width"].value = parseInt(svg.width.baseVal.value) - (10*2);
+			}
+		}
+		if (e.childNodes == undefined) return;
+		for(var i=0, c=e.childNodes; i<c.length; i++) {
+			zoom_parent(c[i]);
+		}
+	}
+	function zoom(node) { 
+		var attr = find_child(node, "rect").attributes;
+		var width = parseFloat(attr["width"].value);
+		var xmin = parseFloat(attr["x"].value);
+		var xmax = parseFloat(xmin + width);
+		var ymin = parseFloat(attr["y"].value);
+		var ratio = (svg.width.baseVal.value - 2*10) / width;
+		
+		// XXX: Workaround for JavaScript float issues (fix me)
+		var fudge = 0.0001;
+		
+		var unzoombtn = document.getElementById("unzoom");
+		unzoombtn.style["opacity"] = "1.0";
+		
+		var el = document.getElementsByTagName("g");
+		for(var i=0;i<el.length;i++){
+			var e = el[i];
+			var a = find_child(e, "rect").attributes;
+			var ex = parseFloat(a["x"].value);
+			var ew = parseFloat(a["width"].value);
+			// Is it an ancestor
+			if (0 == 0) {
+				var upstack = parseFloat(a["y"].value) > ymin;
+			} else {
+				var upstack = parseFloat(a["y"].value) < ymin;
+			}
+			if (upstack) {
+				// Direct ancestor
+				if (ex <= xmin && (ex+ew+fudge) >= xmax) {
+					e.style["opacity"] = "0.5";
+					zoom_parent(e);
+					e.onclick = function(e){unzoom(); zoom(this);};
+					update_text(e);
+				}
+				// not in current path
+				else
+					e.style["display"] = "none";
+			}
+			// Children maybe
+			else {
+				// no common path
+				if (ex < xmin || ex + fudge >= xmax) {
+					e.style["display"] = "none";
+				}
+				else {
+					zoom_child(e, xmin, ratio);
+					e.onclick = function(e){zoom(this);};
+					update_text(e);
+				}
+			}
+		}
+	}
+	function unzoom() {
+		var unzoombtn = document.getElementById("unzoom");
+		unzoombtn.style["opacity"] = "0.0";
+		
+		var el = document.getElementsByTagName("g");
+		for(i=0;i<el.length;i++) {
+			el[i].style["display"] = "block";
+			el[i].style["opacity"] = "1";
+			zoom_reset(el[i]);
+			update_text(el[i]);
+		}
+	}	
+
+	// search
+	function reset_search() {
+		var el = document.getElementsByTagName("rect");
+		for (var i=0; i < el.length; i++) {
+			orig_load(el[i], "fill")
+		}
+	}
+	function search_prompt() {
+		if (!searching) {
+			var term = prompt("Enter a search term (regexp " +
+			    "allowed, eg: ^ext4_)", "");
+			if (term != null) {
+				search(term)
+			}
+		} else {
+			reset_search();
+			searching = 0;
+			searchbtn.style["opacity"] = "0.1";
+			searchbtn.firstChild.nodeValue = "Search"
+			matchedtxt.style["opacity"] = "0.0";
+			matchedtxt.firstChild.nodeValue = ""
+		}
+	}
+	function search(term) {
+		var re = new RegExp(term);
+		var el = document.getElementsByTagName("g");
+		var matches = new Object();
+		var maxwidth = 0;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			if (e.attributes["class"].value != "func_g")
+				continue;
+			var func = g_to_func(e);
+			var rect = find_child(e, "rect");
+			if (rect == null) {
+				// the rect might be wrapped in an anchor
+				// if nameattr href is being used
+				if (rect = find_child(e, "a")) {
+				    rect = find_child(r, "rect");
+				}
+			}
+			if (func == null || rect == null)
+				continue;
+
+			// Save max width. Only works as we have a root frame
+			var w = parseFloat(rect.attributes["width"].value);
+			if (w > maxwidth)
+				maxwidth = w;
+
+			if (func.match(re)) {
+				// highlight
+				var x = parseFloat(rect.attributes["x"].value);
+				orig_save(rect, "fill");
+				rect.attributes["fill"].value =
+				    "rgb(230,0,230)";
+
+				// remember matches
+				if (matches[x] == undefined) {
+					matches[x] = w;
+				} else {
+					if (w > matches[x]) {
+						// overwrite with parent
+						matches[x] = w;
+					}
+				}
+				searching = 1;
+			}
+		}
+		if (!searching)
+			return;
+
+		searchbtn.style["opacity"] = "1.0";
+		searchbtn.firstChild.nodeValue = "Reset Search"
+
+		// calculate percent matched, excluding vertical overlap
+		var count = 0;
+		var lastx = -1;
+		var lastw = 0;
+		var keys = Array();
+		for (k in matches) {
+			if (matches.hasOwnProperty(k))
+				keys.push(k);
+		}
+		// sort the matched frames by their x location
+		// ascending, then width descending
+		keys.sort(function(a, b){
+				return a - b;
+			if (a < b || a > b)
+				return a - b;
+			return matches[b] - matches[a];
+		});
+		// Step through frames saving only the biggest bottom-up frames
+		// thanks to the sort order. This relies on the tree property
+		// where children are always smaller than their parents.
+		for (var k in keys) {
+			var x = parseFloat(keys[k]);
+			var w = matches[keys[k]];
+			if (x >= lastx + lastw) {
+				count += w;
+				lastx = x;
+				lastw = w;
+			}
+		}
+		// display matched percent
+		matchedtxt.style["opacity"] = "1.0";
+		pct = 100 * count / maxwidth;
+		if (pct == 100)
+			pct = "100"
+		else
+			pct = pct.toFixed(1)
+		matchedtxt.firstChild.nodeValue = "Matched: " + pct + "%";
+	}
+	function searchover(e) {
+		searchbtn.style["opacity"] = "1.0";
+	}
+	function searchout(e) {
+		if (searching) {
+			searchbtn.style["opacity"] = "1.0";
+		} else {
+			searchbtn.style["opacity"] = "0.1";
+		}
+	}
+]]>
+</script>
+<rect x="0.0" y="0" width="1200.0" height="1218.0" fill="url(#background)"  />
+<text text-anchor="middle" x="600.00" y="24" font-size="17" font-family="Verdana" fill="rgb(0,0,0)"  >Kernel stack, Userspace, OS State and Wait event profiling of Oracle random I/O (SLOB workload, high latency I/O</text>
+<text text-anchor="" x="10.00" y="1201" font-size="12" font-family="Verdana" fill="rgb(0,0,0)" id="details" > </text>
+<text text-anchor="" x="10.00" y="24" font-size="12" font-family="Verdana" fill="rgb(0,0,0)" id="unzoom" onclick="unzoom()" style="opacity:0.0;cursor:pointer" >Reset Zoom</text>
+<text text-anchor="" x="1090.00" y="24" font-size="12" font-family="Verdana" fill="rgb(0,0,0)" id="search" onmouseover="searchover()" onmouseout="searchout()" onclick="search_prompt()" style="opacity:0.1;cursor:pointer" >Search</text>
+<text text-anchor="" x="1090.00" y="1201" font-size="12" font-family="Verdana" fill="rgb(0,0,0)" id="matched" > </text>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kkxexe (21 samples, 4.20%)</title><rect x="36.0" y="897" width="49.5" height="15.0" fill="rgb(230,110,29)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="907.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kkxexe</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfd_io (6 samples, 1.20%)</title><rect x="85.5" y="241" width="14.2" height="15.0" fill="rgb(220,9,1)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="251.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfkRequest (6 samples, 1.20%)</title><rect x="85.5" y="337" width="14.2" height="15.0" fill="rgb(241,146,54)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="347.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiino (3 samples, 0.60%)</title><rect x="19.4" y="993" width="7.1" height="15.0" fill="rgb(234,194,7)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="1003.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qetlbr (3 samples, 0.60%)</title><rect x="19.4" y="577" width="7.1" height="15.0" fill="rgb(205,120,39)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="587.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sys_io_getevents (3 samples, 0.60%)</title><rect x="26.5" y="113" width="7.1" height="15.0" fill="rgb(236,71,2)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="123.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequestPriv (14 samples, 2.80%)</title><rect x="52.5" y="401" width="33.0" height="15.0" fill="rgb(254,9,1)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="411.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kf..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>vfs_read (2 samples, 0.40%)</title><rect x="1166.4" y="1089" width="4.7" height="15.0" fill="rgb(235,13,34)" rx="2" ry="2" />
+<text text-anchor="" x="1169.40" y="1099.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfrwat (4 samples, 0.80%)</title><rect x="10.0" y="193" width="9.4" height="15.0" fill="rgb(254,45,42)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>blkdev_aio_read (2 samples, 0.40%)</title><rect x="1166.4" y="1057" width="4.7" height="15.0" fill="rgb(252,225,41)" rx="2" ry="2" />
+<text text-anchor="" x="1169.40" y="1067.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>main (8 samples, 1.60%)</title><rect x="1171.1" y="1089" width="18.9" height="15.0" fill="rgb(226,32,0)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="1099.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioSubmitIO (6 samples, 1.20%)</title><rect x="85.5" y="369" width="14.2" height="15.0" fill="rgb(246,36,24)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="379.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfrwat (3 samples, 0.60%)</title><rect x="19.4" y="193" width="7.1" height="15.0" fill="rgb(224,1,11)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pevm_EXECC (3 samples, 0.60%)</title><rect x="26.5" y="801" width="7.1" height="15.0" fill="rgb(245,25,1)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="811.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbgtcr (3 samples, 0.60%)</title><rect x="19.4" y="529" width="7.1" height="15.0" fill="rgb(222,97,44)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="539.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qergsFetch (21 samples, 4.20%)</title><rect x="36.0" y="625" width="49.5" height="15.0" fill="rgb(227,100,30)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="635.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >qergs..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opidrv (8 samples, 1.60%)</title><rect x="1171.1" y="1025" width="18.9" height="15.0" fill="rgb(238,76,35)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="1035.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequest (6 samples, 1.20%)</title><rect x="85.5" y="401" width="14.2" height="15.0" fill="rgb(252,162,44)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="411.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioSubmitIO (14 samples, 2.80%)</title><rect x="52.5" y="385" width="33.0" height="15.0" fill="rgb(234,135,49)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="395.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kf..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_ufs_sync_io (7 samples, 1.40%)</title><rect x="1149.9" y="289" width="16.5" height="15.0" fill="rgb(221,195,36)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="299.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sys_io_getevents (5 samples, 1.00%)</title><rect x="40.7" y="113" width="11.8" height="15.0" fill="rgb(206,201,36)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="123.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__libc_start_main (8 samples, 1.60%)</title><rect x="1171.1" y="1105" width="18.9" height="15.0" fill="rgb(223,141,24)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="1115.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdaio (2 samples, 0.40%)</title><rect x="99.7" y="209" width="4.7" height="15.0" fill="rgb(239,44,6)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>system_call_fastpath (3 samples, 0.60%)</title><rect x="19.4" y="129" width="7.1" height="15.0" fill="rgb(251,19,0)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__pread_nocancel (7 samples, 1.40%)</title><rect x="1149.9" y="209" width="16.5" height="15.0" fill="rgb(205,205,31)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdread (14 samples, 2.80%)</title><rect x="52.5" y="273" width="33.0" height="15.0" fill="rgb(217,223,45)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="283.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ks..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrrun_no_tool (4 samples, 0.80%)</title><rect x="10.0" y="833" width="9.4" height="15.0" fill="rgb(247,227,18)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="843.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sys_pread64 (14 samples, 2.80%)</title><rect x="52.5" y="177" width="33.0" height="15.0" fill="rgb(250,192,22)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >sy..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qertbFetchByRowID (3 samples, 0.60%)</title><rect x="19.4" y="593" width="7.1" height="15.0" fill="rgb(248,202,30)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="603.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (3 samples, 0.60%)</title><rect x="19.4" y="1009" width="7.1" height="15.0" fill="rgb(243,32,3)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="1019.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kdsgrp (8 samples, 1.60%)</title><rect x="1171.1" y="561" width="18.9" height="15.0" fill="rgb(251,218,30)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="571.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrrun (3 samples, 0.60%)</title><rect x="19.4" y="849" width="7.1" height="15.0" fill="rgb(223,211,1)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="859.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfd_io (6 samples, 1.20%)</title><rect x="85.5" y="449" width="14.2" height="15.0" fill="rgb(206,113,22)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="459.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequestPriv (5 samples, 1.00%)</title><rect x="40.7" y="337" width="11.8" height="15.0" fill="rgb(206,51,34)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="347.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafRequest (8 samples, 1.60%)</title><rect x="1171.1" y="369" width="18.9" height="15.0" fill="rgb(239,147,30)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="379.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__blockdev_direct_IO_newtrunc (2 samples, 0.40%)</title><rect x="1166.4" y="993" width="4.7" height="15.0" fill="rgb(251,51,46)" rx="2" ry="2" />
+<text text-anchor="" x="1169.40" y="1003.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioWaitIO (4 samples, 0.80%)</title><rect x="10.0" y="321" width="9.4" height="15.0" fill="rgb(232,106,30)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="331.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafRequest (7 samples, 1.40%)</title><rect x="1149.9" y="433" width="16.5" height="15.0" fill="rgb(239,49,35)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="443.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (458 samples, 91.60%)</title><rect x="85.5" y="1009" width="1080.9" height="15.0" fill="rgb(249,172,7)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="1019.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opiodr</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzib (4 samples, 0.80%)</title><rect x="10.0" y="481" width="9.4" height="15.0" fill="rgb(224,116,50)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="491.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qergsFetch (4 samples, 0.80%)</title><rect x="10.0" y="625" width="9.4" height="15.0" fill="rgb(233,218,17)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="635.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>peicnt (8 samples, 1.60%)</title><rect x="1171.1" y="881" width="18.9" height="15.0" fill="rgb(253,31,5)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="891.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opifch2 (3 samples, 0.60%)</title><rect x="19.4" y="641" width="7.1" height="15.0" fill="rgb(208,161,14)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="651.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcb_prefetch (3 samples, 0.60%)</title><rect x="19.4" y="497" width="7.1" height="15.0" fill="rgb(210,160,1)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="507.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (3 samples, 0.60%)</title><rect x="26.5" y="689" width="7.1" height="15.0" fill="rgb(240,184,37)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="699.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ttcpip (458 samples, 91.60%)</title><rect x="85.5" y="961" width="1080.9" height="15.0" fill="rgb(245,142,17)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="971.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ttcpip</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgmstack (21 samples, 4.20%)</title><rect x="36.0" y="721" width="49.5" height="15.0" fill="rgb(217,36,9)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="731.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >skgms..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>main (21 samples, 4.20%)</title><rect x="36.0" y="1089" width="49.5" height="15.0" fill="rgb(250,149,7)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="1099.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >main</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opifch2 (8 samples, 1.60%)</title><rect x="1171.1" y="641" width="18.9" height="15.0" fill="rgb(246,62,43)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="651.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transit_waitIO (443 samples, 88.60%)</title><rect x="104.4" y="289" width="1045.5" height="15.0" fill="rgb(223,87,34)" rx="2" ry="2" />
+<text text-anchor="" x="107.40" y="299.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kfk_transit_waitIO</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequest (14 samples, 2.80%)</title><rect x="52.5" y="417" width="33.0" height="15.0" fill="rgb(229,42,23)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="427.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kf..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kkxexe (8 samples, 1.60%)</title><rect x="1171.1" y="897" width="18.9" height="15.0" fill="rgb(247,176,11)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="907.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (21 samples, 4.20%)</title><rect x="36.0" y="689" width="49.5" height="15.0" fill="rgb(245,208,46)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="699.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opiodr</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qergsFetch (3 samples, 0.60%)</title><rect x="26.5" y="625" width="7.1" height="15.0" fill="rgb(205,175,3)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="635.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__blockdev_direct_IO_newtrunc (14 samples, 2.80%)</title><rect x="52.5" y="65" width="33.0" height="15.0" fill="rgb(237,150,14)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="75.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >__..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfd_skgfqio (7 samples, 1.40%)</title><rect x="1149.9" y="241" width="16.5" height="15.0" fill="rgb(249,133,20)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="251.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdss_bio (8 samples, 1.60%)</title><rect x="1171.1" y="417" width="18.9" height="15.0" fill="rgb(245,171,27)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="427.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kdsgrp (21 samples, 4.20%)</title><rect x="36.0" y="561" width="49.5" height="15.0" fill="rgb(229,97,24)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="571.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kdsgrp</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpidrv (458 samples, 91.60%)</title><rect x="85.5" y="753" width="1080.9" height="15.0" fill="rgb(220,167,9)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="763.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >rpidrv</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sou2o (458 samples, 91.60%)</title><rect x="85.5" y="1041" width="1080.9" height="15.0" fill="rgb(237,62,8)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="1051.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >sou2o</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzfb (1 samples, 0.20%)</title><rect x="38.3" y="417" width="2.4" height="15.0" fill="rgb(243,59,43)" rx="2" ry="2" />
+<text text-anchor="" x="41.32" y="427.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transitIO (14 samples, 2.80%)</title><rect x="52.5" y="369" width="33.0" height="15.0" fill="rgb(252,226,41)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="379.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kf..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfrliopo (3 samples, 0.60%)</title><rect x="19.4" y="161" width="7.1" height="15.0" fill="rgb(252,35,51)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequest (3 samples, 0.60%)</title><rect x="19.4" y="353" width="7.1" height="15.0" fill="rgb(234,184,0)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="363.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>vfs_read (6 samples, 1.20%)</title><rect x="1152.2" y="161" width="14.2" height="15.0" fill="rgb(214,121,24)" rx="2" ry="2" />
+<text text-anchor="" x="1155.24" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>D (disk sleep) (460 samples, 92.00%)</title><rect x="85.5" y="1137" width="1085.6" height="15.0" fill="rgb(227,35,15)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="1147.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >D (disk sleep)</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfospo (5 samples, 1.00%)</title><rect x="40.7" y="177" width="11.8" height="15.0" fill="rgb(249,160,1)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_block (443 samples, 88.60%)</title><rect x="104.4" y="273" width="1045.5" height="15.0" fill="rgb(228,191,54)" rx="2" ry="2" />
+<text text-anchor="" x="107.40" y="283.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kfk_block</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ktrget2 (3 samples, 0.60%)</title><rect x="26.5" y="545" width="7.1" height="15.0" fill="rgb(212,0,42)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="555.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdbio (445 samples, 89.00%)</title><rect x="99.7" y="433" width="1050.2" height="15.0" fill="rgb(229,57,49)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="443.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ksfdbio</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>do_sync_read (14 samples, 2.80%)</title><rect x="52.5" y="145" width="33.0" height="15.0" fill="rgb(210,59,8)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >do..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>event=db file parallel read (Oracle state) (28 samples, 5.60%)</title><rect x="19.4" y="1153" width="66.1" height="15.0" fill="rgb(248,228,41)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="1163.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >event=d..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>io_queue_run (8 samples, 1.60%)</title><rect x="1171.1" y="145" width="18.9" height="15.0" fill="rgb(242,34,36)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>system_call_fastpath (442 samples, 88.40%)</title><rect x="106.8" y="129" width="1043.1" height="15.0" fill="rgb(248,197,43)" rx="2" ry="2" />
+<text text-anchor="" x="109.76" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >system_call_fastpath</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>system_call_fastpath (2 samples, 0.40%)</title><rect x="1166.4" y="1121" width="4.7" height="15.0" fill="rgb(235,17,47)" rx="2" ry="2" />
+<text text-anchor="" x="1169.40" y="1131.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafBatchIO (3 samples, 0.60%)</title><rect x="26.5" y="385" width="7.1" height="15.0" fill="rgb(212,203,20)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="395.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__libc_start_main (458 samples, 91.60%)</title><rect x="85.5" y="1105" width="1080.9" height="15.0" fill="rgb(252,81,45)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="1115.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >__libc_start_main</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfqio (6 samples, 1.20%)</title><rect x="85.5" y="209" width="14.2" height="15.0" fill="rgb(222,111,26)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qerixtFetch (6 samples, 1.20%)</title><rect x="85.5" y="577" width="14.2" height="15.0" fill="rgb(221,202,9)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="587.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequest (7 samples, 1.40%)</title><rect x="1149.9" y="417" width="16.5" height="15.0" fill="rgb(235,84,23)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="427.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ktrget2 (3 samples, 0.60%)</title><rect x="19.4" y="545" width="7.1" height="15.0" fill="rgb(206,177,18)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="555.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_submit_ufs_io (2 samples, 0.40%)</title><rect x="99.7" y="241" width="4.7" height="15.0" fill="rgb(249,101,4)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="251.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfrwat (5 samples, 1.00%)</title><rect x="40.7" y="193" width="11.8" height="15.0" fill="rgb(210,2,47)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioWaitIO (8 samples, 1.60%)</title><rect x="1171.1" y="321" width="18.9" height="15.0" fill="rgb(227,195,46)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="331.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>plsql_run (4 samples, 0.80%)</title><rect x="10.0" y="865" width="9.4" height="15.0" fill="rgb(214,3,24)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="875.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>blkdev_aio_read (14 samples, 2.80%)</title><rect x="52.5" y="129" width="33.0" height="15.0" fill="rgb(217,208,15)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >bl..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiino (21 samples, 4.20%)</title><rect x="36.0" y="993" width="49.5" height="15.0" fill="rgb(242,203,0)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="1003.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opiino</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpiswu2 (4 samples, 0.80%)</title><rect x="10.0" y="737" width="9.4" height="15.0" fill="rgb(222,193,22)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="747.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioWaitIO (3 samples, 0.60%)</title><rect x="19.4" y="321" width="7.1" height="15.0" fill="rgb(239,38,21)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="331.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiefn0 (3 samples, 0.60%)</title><rect x="26.5" y="657" width="7.1" height="15.0" fill="rgb(251,130,33)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="667.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdgo (2 samples, 0.40%)</title><rect x="99.7" y="193" width="4.7" height="15.0" fill="rgb(221,128,49)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfd_skgfqio (6 samples, 1.20%)</title><rect x="85.5" y="225" width="14.2" height="15.0" fill="rgb(211,144,0)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequestPriv (7 samples, 1.40%)</title><rect x="1149.9" y="401" width="16.5" height="15.0" fill="rgb(242,109,16)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="411.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_submit_ufs_io (6 samples, 1.20%)</title><rect x="85.5" y="289" width="14.2" height="15.0" fill="rgb(252,150,27)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="299.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>peicnt (4 samples, 0.80%)</title><rect x="10.0" y="881" width="9.4" height="15.0" fill="rgb(234,23,27)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="891.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafBatchIO (3 samples, 0.60%)</title><rect x="19.4" y="385" width="7.1" height="15.0" fill="rgb(218,18,38)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="395.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiexe (4 samples, 0.80%)</title><rect x="10.0" y="913" width="9.4" height="15.0" fill="rgb(212,95,10)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="923.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdwtio (5 samples, 1.00%)</title><rect x="40.7" y="209" width="11.8" height="15.0" fill="rgb(213,3,9)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgmstack (3 samples, 0.60%)</title><rect x="26.5" y="721" width="7.1" height="15.0" fill="rgb(240,112,26)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="731.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafIO (7 samples, 1.40%)</title><rect x="1149.9" y="449" width="16.5" height="15.0" fill="rgb(216,49,36)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="459.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfospo (3 samples, 0.60%)</title><rect x="19.4" y="177" width="7.1" height="15.0" fill="rgb(247,105,4)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrrun (4 samples, 0.80%)</title><rect x="10.0" y="849" width="9.4" height="15.0" fill="rgb(212,54,11)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="859.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpiswu2 (3 samples, 0.60%)</title><rect x="19.4" y="737" width="7.1" height="15.0" fill="rgb(242,47,33)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="747.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (3 samples, 0.60%)</title><rect x="19.4" y="689" width="7.1" height="15.0" fill="rgb(220,25,33)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="699.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrinstr_EXECC (3 samples, 0.60%)</title><rect x="19.4" y="817" width="7.1" height="15.0" fill="rgb(221,220,3)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="827.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__pread_nocancel (6 samples, 1.20%)</title><rect x="85.5" y="193" width="14.2" height="15.0" fill="rgb(207,129,20)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>system_call_fastpath (14 samples, 2.80%)</title><rect x="52.5" y="193" width="33.0" height="15.0" fill="rgb(228,174,26)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >sy..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_block_ufs (8 samples, 1.60%)</title><rect x="1171.1" y="257" width="18.9" height="15.0" fill="rgb(223,138,48)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="267.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kpoal8 (458 samples, 91.60%)</title><rect x="85.5" y="929" width="1080.9" height="15.0" fill="rgb(215,129,7)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="939.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kpoal8</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opimai_real (4 samples, 0.80%)</title><rect x="10.0" y="1057" width="9.4" height="15.0" fill="rgb(220,141,23)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="1067.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__pread_nocancel (14 samples, 2.80%)</title><rect x="52.5" y="209" width="33.0" height="15.0" fill="rgb(214,128,39)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >__..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafRequest (3 samples, 0.60%)</title><rect x="26.5" y="369" width="7.1" height="15.0" fill="rgb(232,137,31)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="379.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opipls (3 samples, 0.60%)</title><rect x="19.4" y="673" width="7.1" height="15.0" fill="rgb(210,199,43)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="683.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pevm_EXECC (3 samples, 0.60%)</title><rect x="19.4" y="801" width="7.1" height="15.0" fill="rgb(220,83,24)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="811.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transit_waitIO (3 samples, 0.60%)</title><rect x="19.4" y="289" width="7.1" height="15.0" fill="rgb(213,94,53)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="299.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiefn0 (3 samples, 0.60%)</title><rect x="19.4" y="657" width="7.1" height="15.0" fill="rgb(228,86,33)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="667.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>io_queue_run (3 samples, 0.60%)</title><rect x="19.4" y="145" width="7.1" height="15.0" fill="rgb(234,185,20)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiexe (21 samples, 4.20%)</title><rect x="36.0" y="913" width="49.5" height="15.0" fill="rgb(232,2,31)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="923.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opiexe</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>read_events (442 samples, 88.40%)</title><rect x="106.8" y="97" width="1043.1" height="15.0" fill="rgb(218,229,25)" rx="2" ry="2" />
+<text text-anchor="" x="109.76" y="107.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >read_events</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzib (6 samples, 1.20%)</title><rect x="85.5" y="497" width="14.2" height="15.0" fill="rgb(234,46,53)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="507.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzibmlt (445 samples, 89.00%)</title><rect x="99.7" y="465" width="1050.2" height="15.0" fill="rgb(250,120,1)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="475.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kcbzibmlt</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opipls (3 samples, 0.60%)</title><rect x="26.5" y="673" width="7.1" height="15.0" fill="rgb(215,35,20)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="683.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>io_queue_run (4 samples, 0.80%)</title><rect x="10.0" y="145" width="9.4" height="15.0" fill="rgb(242,96,15)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpiswu2 (458 samples, 91.60%)</title><rect x="85.5" y="737" width="1080.9" height="15.0" fill="rgb(214,101,5)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="747.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >rpiswu2</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>blkdev_aio_read (2 samples, 0.40%)</title><rect x="99.7" y="33" width="4.7" height="15.0" fill="rgb(228,226,50)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="43.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbgtcr (4 samples, 0.80%)</title><rect x="10.0" y="529" width="9.4" height="15.0" fill="rgb(219,7,1)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="539.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_ufs_sync_io (6 samples, 1.20%)</title><rect x="85.5" y="273" width="14.2" height="15.0" fill="rgb(248,112,53)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="283.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>do_sync_read (2 samples, 0.40%)</title><rect x="1166.4" y="1073" width="4.7" height="15.0" fill="rgb(205,119,37)" rx="2" ry="2" />
+<text text-anchor="" x="1169.40" y="1083.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ttcpip (21 samples, 4.20%)</title><rect x="36.0" y="961" width="49.5" height="15.0" fill="rgb(220,97,3)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="971.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ttcpip</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qertbFetchByRowID (3 samples, 0.60%)</title><rect x="26.5" y="593" width="7.1" height="15.0" fill="rgb(221,94,10)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="603.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transit_waitIO (4 samples, 0.80%)</title><rect x="10.0" y="289" width="9.4" height="15.0" fill="rgb(252,221,34)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="299.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafRequest (4 samples, 0.80%)</title><rect x="10.0" y="369" width="9.4" height="15.0" fill="rgb(211,82,47)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="379.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>system_call_fastpath (5 samples, 1.00%)</title><rect x="40.7" y="129" width="11.8" height="15.0" fill="rgb(208,220,23)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>do_sync_read (4 samples, 0.80%)</title><rect x="90.2" y="129" width="9.5" height="15.0" fill="rgb(245,56,22)" rx="2" ry="2" />
+<text text-anchor="" x="93.24" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opitsk (21 samples, 4.20%)</title><rect x="36.0" y="977" width="49.5" height="15.0" fill="rgb(252,224,8)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="987.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opitsk</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kdsgrp (4 samples, 0.80%)</title><rect x="10.0" y="561" width="9.4" height="15.0" fill="rgb(227,29,33)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="571.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfd_io (7 samples, 1.40%)</title><rect x="1149.9" y="465" width="16.5" height="15.0" fill="rgb(252,136,48)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="475.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfospo (8 samples, 1.60%)</title><rect x="1171.1" y="177" width="18.9" height="15.0" fill="rgb(228,12,9)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdbio (4 samples, 0.80%)</title><rect x="10.0" y="401" width="9.4" height="15.0" fill="rgb(216,108,9)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="411.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opifch2 (458 samples, 91.60%)</title><rect x="85.5" y="641" width="1080.9" height="15.0" fill="rgb(218,85,27)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="651.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opifch2</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qeilbk1 (6 samples, 1.20%)</title><rect x="85.5" y="545" width="14.2" height="15.0" fill="rgb(228,127,48)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="555.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opipls (8 samples, 1.60%)</title><rect x="1171.1" y="673" width="18.9" height="15.0" fill="rgb(212,213,2)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="683.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kkxexe (4 samples, 0.80%)</title><rect x="10.0" y="897" width="9.4" height="15.0" fill="rgb(247,196,27)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="907.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafIO (14 samples, 2.80%)</title><rect x="52.5" y="449" width="33.0" height="15.0" fill="rgb(241,3,30)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="459.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ks..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzib (14 samples, 2.80%)</title><rect x="52.5" y="513" width="33.0" height="15.0" fill="rgb(207,31,0)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="523.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kc..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qertbFetchByRowID (4 samples, 0.80%)</title><rect x="10.0" y="593" width="9.4" height="15.0" fill="rgb(253,90,54)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="603.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qerflFetch (21 samples, 4.20%)</title><rect x="36.0" y="609" width="49.5" height="15.0" fill="rgb(211,133,38)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="619.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >qerfl..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>psdnal (21 samples, 4.20%)</title><rect x="36.0" y="785" width="49.5" height="15.0" fill="rgb(223,228,28)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="795.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >psdnal</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdss_bio (3 samples, 0.60%)</title><rect x="26.5" y="417" width="7.1" height="15.0" fill="rgb(254,93,37)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="427.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>main (3 samples, 0.60%)</title><rect x="19.4" y="1089" width="7.1" height="15.0" fill="rgb(249,107,38)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="1099.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opitsk (8 samples, 1.60%)</title><rect x="1171.1" y="977" width="18.9" height="15.0" fill="rgb(243,195,39)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="987.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiexe (3 samples, 0.60%)</title><rect x="19.4" y="913" width="7.1" height="15.0" fill="rgb(254,86,1)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="923.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdbio (445 samples, 89.00%)</title><rect x="99.7" y="401" width="1050.2" height="15.0" fill="rgb(241,129,17)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="411.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ksfdbio</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrrun_no_tool (3 samples, 0.60%)</title><rect x="26.5" y="833" width="7.1" height="15.0" fill="rgb(227,140,48)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="843.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qertbFetchByRowID (8 samples, 1.60%)</title><rect x="1171.1" y="593" width="18.9" height="15.0" fill="rgb(239,215,42)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="603.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfrliopo (5 samples, 1.00%)</title><rect x="40.7" y="161" width="11.8" height="15.0" fill="rgb(231,72,12)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>plsql_run (8 samples, 1.60%)</title><rect x="1171.1" y="865" width="18.9" height="15.0" fill="rgb(228,34,19)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="875.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (4 samples, 0.80%)</title><rect x="10.0" y="689" width="9.4" height="15.0" fill="rgb(241,176,42)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="699.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpiswu2 (3 samples, 0.60%)</title><rect x="26.5" y="737" width="7.1" height="15.0" fill="rgb(241,224,21)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="747.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfrliopo (4 samples, 0.80%)</title><rect x="10.0" y="161" width="9.4" height="15.0" fill="rgb(250,47,1)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpidrv (3 samples, 0.60%)</title><rect x="26.5" y="753" width="7.1" height="15.0" fill="rgb(225,15,37)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="763.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfospo (3 samples, 0.60%)</title><rect x="26.5" y="177" width="7.1" height="15.0" fill="rgb(243,75,46)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kdsgrp (452 samples, 90.40%)</title><rect x="99.7" y="561" width="1066.7" height="15.0" fill="rgb(239,136,23)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="571.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kdsgrp</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_block_ufs (443 samples, 88.60%)</title><rect x="104.4" y="257" width="1045.5" height="15.0" fill="rgb(229,136,46)" rx="2" ry="2" />
+<text text-anchor="" x="107.40" y="267.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kfk_block_ufs</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrrun_no_tool (3 samples, 0.60%)</title><rect x="19.4" y="833" width="7.1" height="15.0" fill="rgb(231,72,50)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="843.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transit_waitIO (5 samples, 1.00%)</title><rect x="40.7" y="289" width="11.8" height="15.0" fill="rgb(223,181,23)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="299.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>main (4 samples, 0.80%)</title><rect x="10.0" y="1089" width="9.4" height="15.0" fill="rgb(207,172,8)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="1099.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opimai_real (8 samples, 1.60%)</title><rect x="1171.1" y="1057" width="18.9" height="15.0" fill="rgb(243,137,14)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="1067.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequest (8 samples, 1.60%)</title><rect x="1171.1" y="353" width="18.9" height="15.0" fill="rgb(223,114,31)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="363.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiexe (458 samples, 91.60%)</title><rect x="85.5" y="913" width="1080.9" height="15.0" fill="rgb(242,160,39)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="923.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opiexe</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrrun (21 samples, 4.20%)</title><rect x="36.0" y="849" width="49.5" height="15.0" fill="rgb(208,86,12)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="859.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >pfrrun</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sys_io_getevents (8 samples, 1.60%)</title><rect x="1171.1" y="113" width="18.9" height="15.0" fill="rgb(220,187,47)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="123.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>psdnal (458 samples, 91.60%)</title><rect x="85.5" y="785" width="1080.9" height="15.0" fill="rgb(220,214,32)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="795.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >psdnal</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qerflFetch (4 samples, 0.80%)</title><rect x="10.0" y="609" width="9.4" height="15.0" fill="rgb(219,117,20)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="619.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequestPriv (8 samples, 1.60%)</title><rect x="1171.1" y="337" width="18.9" height="15.0" fill="rgb(242,98,21)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="347.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>blkdev_aio_read (4 samples, 0.80%)</title><rect x="90.2" y="113" width="9.5" height="15.0" fill="rgb(217,129,34)" rx="2" ry="2" />
+<text text-anchor="" x="93.24" y="123.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>S (sleeping) (22 samples, 4.40%)</title><rect x="33.6" y="1137" width="51.9" height="15.0" fill="rgb(247,146,39)" rx="2" ry="2" />
+<text text-anchor="" x="36.60" y="1147.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >S (sl..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcb_prefetch (7 samples, 1.40%)</title><rect x="36.0" y="497" width="16.5" height="15.0" fill="rgb(225,181,20)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="507.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbpioqWillWaitForIO (7 samples, 1.40%)</title><rect x="36.0" y="513" width="16.5" height="15.0" fill="rgb(227,96,35)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="523.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pevm_EXECC (4 samples, 0.80%)</title><rect x="10.0" y="801" width="9.4" height="15.0" fill="rgb(249,199,36)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="811.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transitIO (5 samples, 1.00%)</title><rect x="40.7" y="305" width="11.8" height="15.0" fill="rgb(220,30,2)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="315.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>system_call_fastpath (2 samples, 0.40%)</title><rect x="99.7" y="113" width="4.7" height="15.0" fill="rgb(253,144,3)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="123.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transit_waitIO (8 samples, 1.60%)</title><rect x="1171.1" y="289" width="18.9" height="15.0" fill="rgb(223,153,49)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="299.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__blockdev_direct_IO (6 samples, 1.20%)</title><rect x="1152.2" y="81" width="14.2" height="15.0" fill="rgb(214,144,22)" rx="2" ry="2" />
+<text text-anchor="" x="1155.24" y="91.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdbio (3 samples, 0.60%)</title><rect x="26.5" y="433" width="7.1" height="15.0" fill="rgb(211,126,26)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="443.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opifch2 (3 samples, 0.60%)</title><rect x="26.5" y="641" width="7.1" height="15.0" fill="rgb(206,37,24)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="651.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcfprd1 (445 samples, 89.00%)</title><rect x="99.7" y="449" width="1050.2" height="15.0" fill="rgb(212,151,40)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="459.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kcfprd1</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>psddr0 (8 samples, 1.60%)</title><rect x="1171.1" y="769" width="18.9" height="15.0" fill="rgb(251,182,4)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="779.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdwtio (3 samples, 0.60%)</title><rect x="19.4" y="209" width="7.1" height="15.0" fill="rgb(244,50,18)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>read_events (4 samples, 0.80%)</title><rect x="10.0" y="97" width="9.4" height="15.0" fill="rgb(253,111,35)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="107.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzib (3 samples, 0.60%)</title><rect x="26.5" y="481" width="7.1" height="15.0" fill="rgb(217,100,40)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="491.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>peicnt (3 samples, 0.60%)</title><rect x="26.5" y="881" width="7.1" height="15.0" fill="rgb(222,211,17)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="891.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafRequest (5 samples, 1.00%)</title><rect x="40.7" y="369" width="11.8" height="15.0" fill="rgb(210,225,5)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="379.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequestPriv (3 samples, 0.60%)</title><rect x="19.4" y="337" width="7.1" height="15.0" fill="rgb(225,12,48)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="347.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>generic_file_aio_read (4 samples, 0.80%)</title><rect x="90.2" y="97" width="9.5" height="15.0" fill="rgb(246,164,44)" rx="2" ry="2" />
+<text text-anchor="" x="93.24" y="107.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>all (500 samples, 100%)</title><rect x="10.0" y="1169" width="1180.0" height="15.0" fill="rgb(218,73,41)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="1179.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdbio (3 samples, 0.60%)</title><rect x="19.4" y="401" width="7.1" height="15.0" fill="rgb(250,73,15)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="411.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdwat_internal (5 samples, 1.00%)</title><rect x="40.7" y="225" width="11.8" height="15.0" fill="rgb(215,15,8)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>blkdev_direct_IO (6 samples, 1.20%)</title><rect x="1152.2" y="97" width="14.2" height="15.0" fill="rgb(239,139,29)" rx="2" ry="2" />
+<text text-anchor="" x="1155.24" y="107.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ktrget2 (6 samples, 1.20%)</title><rect x="85.5" y="529" width="14.2" height="15.0" fill="rgb(252,111,18)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="539.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioWaitIO (3 samples, 0.60%)</title><rect x="26.5" y="321" width="7.1" height="15.0" fill="rgb(228,74,36)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="331.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzibmlt (3 samples, 0.60%)</title><rect x="26.5" y="465" width="7.1" height="15.0" fill="rgb(249,209,7)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="475.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_submit_io (14 samples, 2.80%)</title><rect x="52.5" y="321" width="33.0" height="15.0" fill="rgb(230,49,23)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="331.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kf..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequestPriv (3 samples, 0.60%)</title><rect x="26.5" y="337" width="7.1" height="15.0" fill="rgb(207,81,29)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="347.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qetlbr (8 samples, 1.60%)</title><rect x="1171.1" y="577" width="18.9" height="15.0" fill="rgb(221,85,15)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="587.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdbio (3 samples, 0.60%)</title><rect x="26.5" y="401" width="7.1" height="15.0" fill="rgb(242,67,0)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="411.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfd_skgfqio (2 samples, 0.40%)</title><rect x="99.7" y="177" width="4.7" height="15.0" fill="rgb(205,12,25)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzgb (2 samples, 0.40%)</title><rect x="36.0" y="433" width="4.7" height="15.0" fill="rgb(248,220,39)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="443.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzib (445 samples, 89.00%)</title><rect x="99.7" y="481" width="1050.2" height="15.0" fill="rgb(209,120,29)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="491.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kcbzib</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ssthrdmain (3 samples, 0.60%)</title><rect x="26.5" y="1073" width="7.1" height="15.0" fill="rgb(251,166,22)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="1083.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbpioqWillWaitForIO (445 samples, 89.00%)</title><rect x="99.7" y="513" width="1050.2" height="15.0" fill="rgb(216,57,12)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="523.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kcbpioqWillWaitForIO</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>system_call_fastpath (8 samples, 1.60%)</title><rect x="1171.1" y="129" width="18.9" height="15.0" fill="rgb(251,91,20)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpiswu2 (21 samples, 4.20%)</title><rect x="36.0" y="737" width="49.5" height="15.0" fill="rgb(215,73,18)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="747.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >rpiswu2</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__blockdev_direct_IO (4 samples, 0.80%)</title><rect x="90.2" y="65" width="9.5" height="15.0" fill="rgb(248,39,5)" rx="2" ry="2" />
+<text text-anchor="" x="93.24" y="75.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgmstack (8 samples, 1.60%)</title><rect x="1171.1" y="721" width="18.9" height="15.0" fill="rgb(240,114,10)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="731.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>psddr0 (21 samples, 4.20%)</title><rect x="36.0" y="769" width="49.5" height="15.0" fill="rgb(212,65,42)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="779.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >psddr0</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioSubmitIO (2 samples, 0.40%)</title><rect x="99.7" y="321" width="4.7" height="15.0" fill="rgb(248,2,13)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="331.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qerflFetch (3 samples, 0.60%)</title><rect x="19.4" y="609" width="7.1" height="15.0" fill="rgb(238,2,48)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="619.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfrwat (8 samples, 1.60%)</title><rect x="1171.1" y="193" width="18.9" height="15.0" fill="rgb(205,2,1)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opipls (4 samples, 0.80%)</title><rect x="10.0" y="673" width="9.4" height="15.0" fill="rgb(243,54,33)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="683.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrrun_no_tool (458 samples, 91.60%)</title><rect x="85.5" y="833" width="1080.9" height="15.0" fill="rgb(254,89,20)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="843.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >pfrrun_no_tool</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ssthrdmain (3 samples, 0.60%)</title><rect x="19.4" y="1073" width="7.1" height="15.0" fill="rgb(240,45,44)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="1083.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transitIO (443 samples, 88.60%)</title><rect x="104.4" y="305" width="1045.5" height="15.0" fill="rgb(228,201,38)" rx="2" ry="2" />
+<text text-anchor="" x="107.40" y="315.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kfk_transitIO</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafBatchIO (5 samples, 1.00%)</title><rect x="40.7" y="385" width="11.8" height="15.0" fill="rgb(247,36,29)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="395.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdwat_internal (4 samples, 0.80%)</title><rect x="10.0" y="225" width="9.4" height="15.0" fill="rgb(209,45,2)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>event=db file sequential read (Oracle state) (468 samples, 93.60%)</title><rect x="85.5" y="1153" width="1104.5" height="15.0" fill="rgb(235,99,10)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="1163.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >event=db file sequential read (Oracle state)</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sys_io_getevents (442 samples, 88.40%)</title><rect x="106.8" y="113" width="1043.1" height="15.0" fill="rgb(239,103,41)" rx="2" ry="2" />
+<text text-anchor="" x="109.76" y="123.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >sys_io_getevents</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbgtcr (8 samples, 1.60%)</title><rect x="1171.1" y="529" width="18.9" height="15.0" fill="rgb(246,27,16)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="539.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_submit_io (7 samples, 1.40%)</title><rect x="1149.9" y="321" width="16.5" height="15.0" fill="rgb(236,222,2)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="331.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcfrbd1 (6 samples, 1.20%)</title><rect x="85.5" y="481" width="14.2" height="15.0" fill="rgb(221,185,6)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="491.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>system_call_fastpath (3 samples, 0.60%)</title><rect x="26.5" y="129" width="7.1" height="15.0" fill="rgb(235,38,20)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>R (running) (8 samples, 1.60%)</title><rect x="1171.1" y="1137" width="18.9" height="15.0" fill="rgb(207,82,31)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="1147.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>read_events (8 samples, 1.60%)</title><rect x="1171.1" y="97" width="18.9" height="15.0" fill="rgb(223,73,22)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="107.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpidrv (4 samples, 0.80%)</title><rect x="10.0" y="753" width="9.4" height="15.0" fill="rgb(215,87,29)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="763.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (21 samples, 4.20%)</title><rect x="36.0" y="945" width="49.5" height="15.0" fill="rgb(217,218,7)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="955.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opiodr</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfrliopo (8 samples, 1.60%)</title><rect x="1171.1" y="161" width="18.9" height="15.0" fill="rgb(216,137,9)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_start (3 samples, 0.60%)</title><rect x="19.4" y="1121" width="7.1" height="15.0" fill="rgb(231,227,48)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="1131.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzibmlt (8 samples, 1.60%)</title><rect x="1171.1" y="465" width="18.9" height="15.0" fill="rgb(241,133,5)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="475.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafRequest (445 samples, 89.00%)</title><rect x="99.7" y="369" width="1050.2" height="15.0" fill="rgb(250,38,52)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="379.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ksfdafRequest</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpidrus (8 samples, 1.60%)</title><rect x="1171.1" y="705" width="18.9" height="15.0" fill="rgb(240,143,45)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="715.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_ufs_async_io (2 samples, 0.40%)</title><rect x="99.7" y="225" width="4.7" height="15.0" fill="rgb(215,217,2)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcfprd1 (3 samples, 0.60%)</title><rect x="19.4" y="449" width="7.1" height="15.0" fill="rgb(246,63,0)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="459.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kpoal8 (8 samples, 1.60%)</title><rect x="1171.1" y="929" width="18.9" height="15.0" fill="rgb(242,188,9)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="939.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafIO (6 samples, 1.20%)</title><rect x="85.5" y="433" width="14.2" height="15.0" fill="rgb(235,8,5)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="443.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiefn0 (21 samples, 4.20%)</title><rect x="36.0" y="657" width="49.5" height="15.0" fill="rgb(250,184,0)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="667.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opiefn0</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kkxexe (3 samples, 0.60%)</title><rect x="19.4" y="897" width="7.1" height="15.0" fill="rgb(206,173,54)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="907.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transitIO (4 samples, 0.80%)</title><rect x="10.0" y="305" width="9.4" height="15.0" fill="rgb(221,201,9)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="315.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiexe (8 samples, 1.60%)</title><rect x="1171.1" y="913" width="18.9" height="15.0" fill="rgb(241,214,4)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="923.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrinstr_EXECC (3 samples, 0.60%)</title><rect x="26.5" y="817" width="7.1" height="15.0" fill="rgb(232,134,16)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="827.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfkRequest (7 samples, 1.40%)</title><rect x="1149.9" y="353" width="16.5" height="15.0" fill="rgb(233,223,45)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="363.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>plsql_run (21 samples, 4.20%)</title><rect x="36.0" y="865" width="49.5" height="15.0" fill="rgb(232,102,0)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="875.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >plsql..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdbio (5 samples, 1.00%)</title><rect x="40.7" y="433" width="11.8" height="15.0" fill="rgb(207,36,37)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="443.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdread (6 samples, 1.20%)</title><rect x="85.5" y="257" width="14.2" height="15.0" fill="rgb(250,85,15)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="267.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>aio_run_iocb (2 samples, 0.40%)</title><rect x="99.7" y="65" width="4.7" height="15.0" fill="rgb(210,101,43)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="75.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_block (3 samples, 0.60%)</title><rect x="19.4" y="273" width="7.1" height="15.0" fill="rgb(228,111,14)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="283.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdbio (5 samples, 1.00%)</title><rect x="40.7" y="401" width="11.8" height="15.0" fill="rgb(247,72,31)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="411.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioSubmitIO (7 samples, 1.40%)</title><rect x="1149.9" y="385" width="16.5" height="15.0" fill="rgb(246,118,54)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="395.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transitIO (7 samples, 1.40%)</title><rect x="1149.9" y="369" width="16.5" height="15.0" fill="rgb(232,229,31)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="379.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (21 samples, 4.20%)</title><rect x="36.0" y="1009" width="49.5" height="15.0" fill="rgb(217,164,16)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="1019.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opiodr</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzib (8 samples, 1.60%)</title><rect x="1171.1" y="481" width="18.9" height="15.0" fill="rgb(248,151,31)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="491.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qerflFetch (3 samples, 0.60%)</title><rect x="26.5" y="609" width="7.1" height="15.0" fill="rgb(230,25,14)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="619.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>plsql_run (458 samples, 91.60%)</title><rect x="85.5" y="865" width="1080.9" height="15.0" fill="rgb(232,31,14)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="875.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >plsql_run</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequestPriv (6 samples, 1.20%)</title><rect x="85.5" y="385" width="14.2" height="15.0" fill="rgb(224,45,18)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="395.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafBatchIO (4 samples, 0.80%)</title><rect x="10.0" y="385" width="9.4" height="15.0" fill="rgb(246,20,45)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="395.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_block (8 samples, 1.60%)</title><rect x="1171.1" y="273" width="18.9" height="15.0" fill="rgb(214,122,27)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="283.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzibmlt (7 samples, 1.40%)</title><rect x="36.0" y="465" width="16.5" height="15.0" fill="rgb(252,116,5)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="475.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opipls (21 samples, 4.20%)</title><rect x="36.0" y="673" width="49.5" height="15.0" fill="rgb(232,72,33)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="683.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opipls</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qetlbr (21 samples, 4.20%)</title><rect x="36.0" y="577" width="49.5" height="15.0" fill="rgb(213,229,47)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="587.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >qetlbr</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequest (3 samples, 0.60%)</title><rect x="26.5" y="353" width="7.1" height="15.0" fill="rgb(227,2,30)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="363.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__libc_start_main (21 samples, 4.20%)</title><rect x="36.0" y="1105" width="49.5" height="15.0" fill="rgb(229,23,25)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="1115.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >__lib..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafRequest (3 samples, 0.60%)</title><rect x="19.4" y="369" width="7.1" height="15.0" fill="rgb(219,74,43)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="379.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sou2o (3 samples, 0.60%)</title><rect x="19.4" y="1041" width="7.1" height="15.0" fill="rgb(232,113,22)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="1051.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrrun_no_tool (8 samples, 1.60%)</title><rect x="1171.1" y="833" width="18.9" height="15.0" fill="rgb(238,151,10)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="843.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ktrget2 (8 samples, 1.60%)</title><rect x="1171.1" y="545" width="18.9" height="15.0" fill="rgb(237,25,36)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="555.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__blockdev_direct_IO_newtrunc (4 samples, 0.80%)</title><rect x="90.2" y="49" width="9.5" height="15.0" fill="rgb(213,40,21)" rx="2" ry="2" />
+<text text-anchor="" x="93.24" y="59.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcfprd1 (4 samples, 0.80%)</title><rect x="10.0" y="449" width="9.4" height="15.0" fill="rgb(220,166,18)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="459.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdbio (3 samples, 0.60%)</title><rect x="19.4" y="433" width="7.1" height="15.0" fill="rgb(221,138,30)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="443.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sys_io_getevents (4 samples, 0.80%)</title><rect x="10.0" y="113" width="9.4" height="15.0" fill="rgb(205,115,31)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="123.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (458 samples, 91.60%)</title><rect x="85.5" y="689" width="1080.9" height="15.0" fill="rgb(239,65,2)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="699.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opiodr</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrrun (8 samples, 1.60%)</title><rect x="1171.1" y="849" width="18.9" height="15.0" fill="rgb(217,1,5)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="859.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (3 samples, 0.60%)</title><rect x="26.5" y="945" width="7.1" height="15.0" fill="rgb(254,121,36)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="955.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (4 samples, 0.80%)</title><rect x="10.0" y="945" width="9.4" height="15.0" fill="rgb(243,32,34)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="955.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrinstr_EXECC (21 samples, 4.20%)</title><rect x="36.0" y="817" width="49.5" height="15.0" fill="rgb(224,70,34)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="827.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >pfrin..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdss_bio (3 samples, 0.60%)</title><rect x="19.4" y="417" width="7.1" height="15.0" fill="rgb(234,115,4)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="427.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdread (7 samples, 1.40%)</title><rect x="1149.9" y="273" width="16.5" height="15.0" fill="rgb(246,12,30)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="283.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ktrget2 (452 samples, 90.40%)</title><rect x="99.7" y="545" width="1066.7" height="15.0" fill="rgb(224,122,26)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="555.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ktrget2</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kpoal8 (3 samples, 0.60%)</title><rect x="19.4" y="929" width="7.1" height="15.0" fill="rgb(211,73,24)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="939.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiefn0 (458 samples, 91.60%)</title><rect x="85.5" y="657" width="1080.9" height="15.0" fill="rgb(250,121,31)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="667.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opiefn0</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiino (458 samples, 91.60%)</title><rect x="85.5" y="993" width="1080.9" height="15.0" fill="rgb(237,55,27)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="1003.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opiino</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_start (21 samples, 4.20%)</title><rect x="36.0" y="1121" width="49.5" height="15.0" fill="rgb(235,116,45)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="1131.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_start</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transitIO (3 samples, 0.60%)</title><rect x="19.4" y="305" width="7.1" height="15.0" fill="rgb(230,185,4)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="315.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdblock (8 samples, 1.60%)</title><rect x="1171.1" y="241" width="18.9" height="15.0" fill="rgb(239,228,4)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="251.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrinstr_EXECC (4 samples, 0.80%)</title><rect x="10.0" y="817" width="9.4" height="15.0" fill="rgb(227,9,9)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="827.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opidrv (4 samples, 0.80%)</title><rect x="10.0" y="1025" width="9.4" height="15.0" fill="rgb(209,11,39)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="1035.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrrun (3 samples, 0.60%)</title><rect x="26.5" y="849" width="7.1" height="15.0" fill="rgb(243,179,2)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="859.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpidrus (4 samples, 0.80%)</title><rect x="10.0" y="705" width="9.4" height="15.0" fill="rgb(241,137,51)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="715.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qergsFetch (3 samples, 0.60%)</title><rect x="19.4" y="625" width="7.1" height="15.0" fill="rgb(254,99,21)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="635.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sou2o (8 samples, 1.60%)</title><rect x="1171.1" y="1041" width="18.9" height="15.0" fill="rgb(250,153,25)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="1051.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>io_queue_run (3 samples, 0.60%)</title><rect x="26.5" y="145" width="7.1" height="15.0" fill="rgb(224,196,16)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pevm_EXECC (458 samples, 91.60%)</title><rect x="85.5" y="801" width="1080.9" height="15.0" fill="rgb(213,42,14)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="811.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >pevm_EXECC</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>psdnal (4 samples, 0.80%)</title><rect x="10.0" y="785" width="9.4" height="15.0" fill="rgb(214,63,16)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="795.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ttcpip (4 samples, 0.80%)</title><rect x="10.0" y="961" width="9.4" height="15.0" fill="rgb(205,217,12)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="971.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>psddr0 (4 samples, 0.80%)</title><rect x="10.0" y="769" width="9.4" height="15.0" fill="rgb(230,1,3)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="779.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfd_io (14 samples, 2.80%)</title><rect x="52.5" y="257" width="33.0" height="15.0" fill="rgb(205,61,29)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="267.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ks..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opimai_real (458 samples, 91.60%)</title><rect x="85.5" y="1057" width="1080.9" height="15.0" fill="rgb(243,200,46)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="1067.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opimai_real</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>read_events (5 samples, 1.00%)</title><rect x="40.7" y="97" width="11.8" height="15.0" fill="rgb(248,50,49)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="107.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbpioqWillWaitForIO (3 samples, 0.60%)</title><rect x="19.4" y="513" width="7.1" height="15.0" fill="rgb(223,197,24)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="523.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpidrus (3 samples, 0.60%)</title><rect x="26.5" y="705" width="7.1" height="15.0" fill="rgb(237,91,15)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="715.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>generic_file_aio_read (14 samples, 2.80%)</title><rect x="52.5" y="113" width="33.0" height="15.0" fill="rgb(218,64,26)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="123.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ge..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdblock (4 samples, 0.80%)</title><rect x="10.0" y="241" width="9.4" height="15.0" fill="rgb(224,190,29)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="251.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_io1 (6 samples, 1.20%)</title><rect x="85.5" y="321" width="14.2" height="15.0" fill="rgb(238,206,9)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="331.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcfrbd1 (14 samples, 2.80%)</title><rect x="52.5" y="497" width="33.0" height="15.0" fill="rgb(219,19,33)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="507.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kc..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrinstr_EXECC (8 samples, 1.60%)</title><rect x="1171.1" y="817" width="18.9" height="15.0" fill="rgb(233,62,16)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="827.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdss_bio (4 samples, 0.80%)</title><rect x="10.0" y="417" width="9.4" height="15.0" fill="rgb(233,17,51)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="427.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdwat_internal (8 samples, 1.60%)</title><rect x="1171.1" y="225" width="18.9" height="15.0" fill="rgb(208,208,4)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_ufs_sync_io (14 samples, 2.80%)</title><rect x="52.5" y="289" width="33.0" height="15.0" fill="rgb(245,104,36)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="299.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kf..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sou2o (21 samples, 4.20%)</title><rect x="36.0" y="1041" width="49.5" height="15.0" fill="rgb(225,153,31)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="1051.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >sou2o</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>vfs_read (4 samples, 0.80%)</title><rect x="90.2" y="145" width="9.5" height="15.0" fill="rgb(210,137,21)" rx="2" ry="2" />
+<text text-anchor="" x="93.24" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opidrv (458 samples, 91.60%)</title><rect x="85.5" y="1025" width="1080.9" height="15.0" fill="rgb(206,41,50)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="1035.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opidrv</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_io1 (2 samples, 0.40%)</title><rect x="99.7" y="273" width="4.7" height="15.0" fill="rgb(226,159,40)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="283.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbpioqWillWaitForIO (4 samples, 0.80%)</title><rect x="10.0" y="513" width="9.4" height="15.0" fill="rgb(230,5,6)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="523.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qergsFetch (458 samples, 91.60%)</title><rect x="85.5" y="625" width="1080.9" height="15.0" fill="rgb(253,78,28)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="635.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >qergsFetch</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ssthrdmain (4 samples, 0.80%)</title><rect x="10.0" y="1073" width="9.4" height="15.0" fill="rgb(224,16,36)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="1083.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_block (3 samples, 0.60%)</title><rect x="26.5" y="273" width="7.1" height="15.0" fill="rgb(232,161,49)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="283.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>system_call_fastpath (4 samples, 0.80%)</title><rect x="10.0" y="129" width="9.4" height="15.0" fill="rgb(253,109,6)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdss_bio (5 samples, 1.00%)</title><rect x="40.7" y="417" width="11.8" height="15.0" fill="rgb(218,215,27)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="427.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>io_submit (2 samples, 0.40%)</title><rect x="99.7" y="129" width="4.7" height="15.0" fill="rgb(208,113,19)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qerflFetch (458 samples, 91.60%)</title><rect x="85.5" y="609" width="1080.9" height="15.0" fill="rgb(213,29,52)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="619.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >qerflFetch</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrrun (458 samples, 91.60%)</title><rect x="85.5" y="849" width="1080.9" height="15.0" fill="rgb(219,81,39)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="859.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >pfrrun</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qerflFetch (8 samples, 1.60%)</title><rect x="1171.1" y="609" width="18.9" height="15.0" fill="rgb(253,154,31)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="619.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>blkdev_direct_IO (14 samples, 2.80%)</title><rect x="52.5" y="97" width="33.0" height="15.0" fill="rgb(225,209,15)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="107.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >bl..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (3 samples, 0.60%)</title><rect x="26.5" y="1009" width="7.1" height="15.0" fill="rgb(209,126,0)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="1019.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcfprd1 (3 samples, 0.60%)</title><rect x="26.5" y="449" width="7.1" height="15.0" fill="rgb(211,0,10)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="459.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdwat_internal (3 samples, 0.60%)</title><rect x="26.5" y="225" width="7.1" height="15.0" fill="rgb(215,222,42)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opifch2 (4 samples, 0.80%)</title><rect x="10.0" y="641" width="9.4" height="15.0" fill="rgb(219,86,2)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="651.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_block (5 samples, 1.00%)</title><rect x="40.7" y="273" width="11.8" height="15.0" fill="rgb(234,126,18)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="283.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>psddr0 (3 samples, 0.60%)</title><rect x="19.4" y="769" width="7.1" height="15.0" fill="rgb(222,196,31)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="779.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sys_io_getevents (3 samples, 0.60%)</title><rect x="19.4" y="113" width="7.1" height="15.0" fill="rgb(242,79,23)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="123.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafRequest (6 samples, 1.20%)</title><rect x="85.5" y="417" width="14.2" height="15.0" fill="rgb(207,207,17)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="427.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sys_pread64 (2 samples, 0.40%)</title><rect x="1166.4" y="1105" width="4.7" height="15.0" fill="rgb(228,25,35)" rx="2" ry="2" />
+<text text-anchor="" x="1169.40" y="1115.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfospo (4 samples, 0.80%)</title><rect x="10.0" y="177" width="9.4" height="15.0" fill="rgb(214,104,44)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequest (5 samples, 1.00%)</title><rect x="40.7" y="353" width="11.8" height="15.0" fill="rgb(225,6,42)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="363.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>plsql_run (3 samples, 0.60%)</title><rect x="26.5" y="865" width="7.1" height="15.0" fill="rgb(241,16,38)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="875.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>D (disk sleep) (4 samples, 0.80%)</title><rect x="10.0" y="1137" width="9.4" height="15.0" fill="rgb(240,117,32)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="1147.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pevm_EXECC (21 samples, 4.20%)</title><rect x="36.0" y="801" width="49.5" height="15.0" fill="rgb(247,145,39)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="811.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >pevm_..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbpioqWillWaitForIO (8 samples, 1.60%)</title><rect x="1171.1" y="513" width="18.9" height="15.0" fill="rgb(222,217,45)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="523.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>blkdev_direct_IO (4 samples, 0.80%)</title><rect x="90.2" y="81" width="9.5" height="15.0" fill="rgb(246,68,31)" rx="2" ry="2" />
+<text text-anchor="" x="93.24" y="91.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>peicnt (458 samples, 91.60%)</title><rect x="85.5" y="881" width="1080.9" height="15.0" fill="rgb(240,39,45)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="891.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >peicnt</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfd_io (7 samples, 1.40%)</title><rect x="1149.9" y="257" width="16.5" height="15.0" fill="rgb(207,13,24)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="267.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qetlbr (452 samples, 90.40%)</title><rect x="99.7" y="577" width="1066.7" height="15.0" fill="rgb(227,167,53)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="587.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >qetlbr</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ssthrdmain (21 samples, 4.20%)</title><rect x="36.0" y="1073" width="49.5" height="15.0" fill="rgb(254,12,47)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="1083.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ssthr..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ssthrdmain (8 samples, 1.60%)</title><rect x="1171.1" y="1073" width="18.9" height="15.0" fill="rgb(207,27,9)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="1083.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequest (445 samples, 89.00%)</title><rect x="99.7" y="353" width="1050.2" height="15.0" fill="rgb(208,24,40)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="363.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kfioRequest</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opipls (458 samples, 91.60%)</title><rect x="85.5" y="673" width="1080.9" height="15.0" fill="rgb(249,62,12)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="683.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opipls</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrrun_no_tool (21 samples, 4.20%)</title><rect x="36.0" y="833" width="49.5" height="15.0" fill="rgb(250,35,24)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="843.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >pfrru..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequestPriv (445 samples, 89.00%)</title><rect x="99.7" y="337" width="1050.2" height="15.0" fill="rgb(228,81,47)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="347.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kfioRequestPriv</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_submit_ufs_io (14 samples, 2.80%)</title><rect x="52.5" y="305" width="33.0" height="15.0" fill="rgb(245,113,27)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="315.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kf..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdwtio (443 samples, 88.60%)</title><rect x="104.4" y="209" width="1045.5" height="15.0" fill="rgb(227,149,9)" rx="2" ry="2" />
+<text text-anchor="" x="107.40" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ksfdwtio</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (458 samples, 91.60%)</title><rect x="85.5" y="945" width="1080.9" height="15.0" fill="rgb(207,22,21)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="955.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opiodr</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kpoal8 (21 samples, 4.20%)</title><rect x="36.0" y="929" width="49.5" height="15.0" fill="rgb(225,130,16)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="939.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kpoal8</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcb_prefetch (3 samples, 0.60%)</title><rect x="26.5" y="497" width="7.1" height="15.0" fill="rgb(246,73,16)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="507.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>system_call_fastpath (6 samples, 1.20%)</title><rect x="1152.2" y="193" width="14.2" height="15.0" fill="rgb(231,1,51)" rx="2" ry="2" />
+<text text-anchor="" x="1155.24" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbz_find_bpid (1 samples, 0.20%)</title><rect x="36.0" y="417" width="2.3" height="15.0" fill="rgb(234,13,33)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="427.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzib (7 samples, 1.40%)</title><rect x="36.0" y="481" width="16.5" height="15.0" fill="rgb(205,128,50)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="491.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qetlbr (4 samples, 0.80%)</title><rect x="10.0" y="577" width="9.4" height="15.0" fill="rgb(242,81,5)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="587.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kkxexe (3 samples, 0.60%)</title><rect x="26.5" y="897" width="7.1" height="15.0" fill="rgb(241,32,4)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="907.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiino (8 samples, 1.60%)</title><rect x="1171.1" y="993" width="18.9" height="15.0" fill="rgb(244,86,9)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="1003.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_start (4 samples, 0.80%)</title><rect x="10.0" y="1121" width="9.4" height="15.0" fill="rgb(227,94,1)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="1131.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__blockdev_direct_IO_newtrunc (6 samples, 1.20%)</title><rect x="1152.2" y="65" width="14.2" height="15.0" fill="rgb(212,179,39)" rx="2" ry="2" />
+<text text-anchor="" x="1155.24" y="75.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>R (running) (3 samples, 0.60%)</title><rect x="26.5" y="1137" width="7.1" height="15.0" fill="rgb(236,116,6)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="1147.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>io_queue_run (5 samples, 1.00%)</title><rect x="40.7" y="145" width="11.8" height="15.0" fill="rgb(231,49,39)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>read_events (3 samples, 0.60%)</title><rect x="26.5" y="97" width="7.1" height="15.0" fill="rgb(205,58,54)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="107.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>io_queue_run (443 samples, 88.60%)</title><rect x="104.4" y="145" width="1045.5" height="15.0" fill="rgb(236,2,44)" rx="2" ry="2" />
+<text text-anchor="" x="107.40" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >io_queue_run</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_io1 (7 samples, 1.40%)</title><rect x="1149.9" y="337" width="16.5" height="15.0" fill="rgb(246,50,6)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="347.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transitIO (2 samples, 0.40%)</title><rect x="99.7" y="305" width="4.7" height="15.0" fill="rgb(226,21,17)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="315.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>peicnt (21 samples, 4.20%)</title><rect x="36.0" y="881" width="49.5" height="15.0" fill="rgb(249,180,1)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="891.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >peicnt</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpiswu2 (8 samples, 1.60%)</title><rect x="1171.1" y="737" width="18.9" height="15.0" fill="rgb(215,31,46)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="747.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfrwat (443 samples, 88.60%)</title><rect x="104.4" y="193" width="1045.5" height="15.0" fill="rgb(214,48,50)" rx="2" ry="2" />
+<text text-anchor="" x="107.40" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >skgfrwat</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>do_sync_read (6 samples, 1.20%)</title><rect x="1152.2" y="145" width="14.2" height="15.0" fill="rgb(219,59,31)" rx="2" ry="2" />
+<text text-anchor="" x="1155.24" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdblock (3 samples, 0.60%)</title><rect x="19.4" y="241" width="7.1" height="15.0" fill="rgb(227,4,18)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="251.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbgtcr (3 samples, 0.60%)</title><rect x="26.5" y="529" width="7.1" height="15.0" fill="rgb(252,106,41)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="539.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>main (458 samples, 91.60%)</title><rect x="85.5" y="1089" width="1080.9" height="15.0" fill="rgb(208,200,3)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="1099.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >main</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_block_ufs (3 samples, 0.60%)</title><rect x="26.5" y="257" width="7.1" height="15.0" fill="rgb(251,181,22)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="267.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>generic_file_aio_read (6 samples, 1.20%)</title><rect x="1152.2" y="113" width="14.2" height="15.0" fill="rgb(234,82,4)" rx="2" ry="2" />
+<text text-anchor="" x="1155.24" y="123.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transitIO (3 samples, 0.60%)</title><rect x="26.5" y="305" width="7.1" height="15.0" fill="rgb(238,136,22)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="315.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiefn0 (8 samples, 1.60%)</title><rect x="1171.1" y="657" width="18.9" height="15.0" fill="rgb(229,31,19)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="667.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdwtio (8 samples, 1.60%)</title><rect x="1171.1" y="209" width="18.9" height="15.0" fill="rgb(241,78,27)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgmstack (458 samples, 91.60%)</title><rect x="85.5" y="721" width="1080.9" height="15.0" fill="rgb(212,190,7)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="731.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >skgmstack</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbpioqWillWaitForIO (3 samples, 0.60%)</title><rect x="26.5" y="513" width="7.1" height="15.0" fill="rgb(227,205,9)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="523.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>generic_file_aio_read (2 samples, 0.40%)</title><rect x="1166.4" y="1041" width="4.7" height="15.0" fill="rgb(216,156,35)" rx="2" ry="2" />
+<text text-anchor="" x="1169.40" y="1051.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>psdnal (3 samples, 0.60%)</title><rect x="19.4" y="785" width="7.1" height="15.0" fill="rgb(249,60,35)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="795.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kpoal8 (4 samples, 0.80%)</title><rect x="10.0" y="929" width="9.4" height="15.0" fill="rgb(239,69,5)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="939.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kkxexe (458 samples, 91.60%)</title><rect x="85.5" y="897" width="1080.9" height="15.0" fill="rgb(246,164,15)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="907.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kkxexe</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ktrget2 (4 samples, 0.80%)</title><rect x="10.0" y="545" width="9.4" height="15.0" fill="rgb(242,72,20)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="555.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzgm (2 samples, 0.40%)</title><rect x="36.0" y="449" width="4.7" height="15.0" fill="rgb(228,122,53)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="459.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcb_prefetch (4 samples, 0.80%)</title><rect x="10.0" y="497" width="9.4" height="15.0" fill="rgb(211,55,21)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="507.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzib (3 samples, 0.60%)</title><rect x="19.4" y="481" width="7.1" height="15.0" fill="rgb(252,82,5)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="491.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcfprd1 (8 samples, 1.60%)</title><rect x="1171.1" y="449" width="18.9" height="15.0" fill="rgb(220,72,20)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="459.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__libc_start_main (3 samples, 0.60%)</title><rect x="26.5" y="1105" width="7.1" height="15.0" fill="rgb(253,174,32)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="1115.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdwtio (3 samples, 0.60%)</title><rect x="26.5" y="209" width="7.1" height="15.0" fill="rgb(209,196,9)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfqio (14 samples, 2.80%)</title><rect x="52.5" y="225" width="33.0" height="15.0" fill="rgb(252,61,34)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >sk..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioWaitIO (5 samples, 1.00%)</title><rect x="40.7" y="321" width="11.8" height="15.0" fill="rgb(221,35,43)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="331.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>vfs_read (14 samples, 2.80%)</title><rect x="52.5" y="161" width="33.0" height="15.0" fill="rgb(216,173,41)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >vf..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opimai_real (3 samples, 0.60%)</title><rect x="26.5" y="1057" width="7.1" height="15.0" fill="rgb(242,81,19)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="1067.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opitsk (4 samples, 0.80%)</title><rect x="10.0" y="977" width="9.4" height="15.0" fill="rgb(221,112,13)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="987.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpidrv (3 samples, 0.60%)</title><rect x="19.4" y="753" width="7.1" height="15.0" fill="rgb(235,25,4)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="763.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_block_ufs (5 samples, 1.00%)</title><rect x="40.7" y="257" width="11.8" height="15.0" fill="rgb(244,174,0)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="267.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ktrget2 (21 samples, 4.20%)</title><rect x="36.0" y="545" width="49.5" height="15.0" fill="rgb(206,55,44)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="555.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ktrget2</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioWaitIO (443 samples, 88.60%)</title><rect x="104.4" y="321" width="1045.5" height="15.0" fill="rgb(247,215,37)" rx="2" ry="2" />
+<text text-anchor="" x="107.40" y="331.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kfioWaitIO</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pevm_EXECC (8 samples, 1.60%)</title><rect x="1171.1" y="801" width="18.9" height="15.0" fill="rgb(208,70,41)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="811.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ttcpip (3 samples, 0.60%)</title><rect x="26.5" y="961" width="7.1" height="15.0" fill="rgb(215,227,14)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="971.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>peicnt (3 samples, 0.60%)</title><rect x="19.4" y="881" width="7.1" height="15.0" fill="rgb(208,173,15)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="891.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpidrus (3 samples, 0.60%)</title><rect x="19.4" y="705" width="7.1" height="15.0" fill="rgb(237,81,2)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="715.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__blockdev_direct_IO (2 samples, 0.40%)</title><rect x="1166.4" y="1009" width="4.7" height="15.0" fill="rgb(219,203,20)" rx="2" ry="2" />
+<text text-anchor="" x="1169.40" y="1019.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_block_ufs (4 samples, 0.80%)</title><rect x="10.0" y="257" width="9.4" height="15.0" fill="rgb(213,79,31)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="267.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcfrbd1 (7 samples, 1.40%)</title><rect x="1149.9" y="497" width="16.5" height="15.0" fill="rgb(228,158,0)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="507.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdwtio (4 samples, 0.80%)</title><rect x="10.0" y="209" width="9.4" height="15.0" fill="rgb(220,49,32)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpidrus (458 samples, 91.60%)</title><rect x="85.5" y="705" width="1080.9" height="15.0" fill="rgb(209,201,29)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="715.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >rpidrus</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafBatchIO (8 samples, 1.60%)</title><rect x="1171.1" y="385" width="18.9" height="15.0" fill="rgb(210,105,40)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="395.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opimai_real (21 samples, 4.20%)</title><rect x="36.0" y="1057" width="49.5" height="15.0" fill="rgb(213,3,34)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="1067.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opima..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>aio_rw_vect_retry (2 samples, 0.40%)</title><rect x="99.7" y="49" width="4.7" height="15.0" fill="rgb(231,107,30)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="59.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_start (8 samples, 1.60%)</title><rect x="1171.1" y="1121" width="18.9" height="15.0" fill="rgb(244,201,41)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="1131.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpidrv (8 samples, 1.60%)</title><rect x="1171.1" y="753" width="18.9" height="15.0" fill="rgb(246,180,38)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="763.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpidrus (21 samples, 4.20%)</title><rect x="36.0" y="705" width="49.5" height="15.0" fill="rgb(253,20,24)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="715.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >rpidrus</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>psdnal (3 samples, 0.60%)</title><rect x="26.5" y="785" width="7.1" height="15.0" fill="rgb(232,80,44)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="795.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafBatchIO (445 samples, 89.00%)</title><rect x="99.7" y="385" width="1050.2" height="15.0" fill="rgb(253,150,1)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="395.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ksfdafBatchIO</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sys_pread64 (4 samples, 0.80%)</title><rect x="90.2" y="161" width="9.5" height="15.0" fill="rgb(231,9,7)" rx="2" ry="2" />
+<text text-anchor="" x="93.24" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfkRequest (14 samples, 2.80%)</title><rect x="52.5" y="353" width="33.0" height="15.0" fill="rgb(236,109,37)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="363.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kf..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>psdnal (8 samples, 1.60%)</title><rect x="1171.1" y="785" width="18.9" height="15.0" fill="rgb(229,126,8)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="795.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qergsFetch (8 samples, 1.60%)</title><rect x="1171.1" y="625" width="18.9" height="15.0" fill="rgb(246,217,11)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="635.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzibmlt (4 samples, 0.80%)</title><rect x="10.0" y="465" width="9.4" height="15.0" fill="rgb(206,112,33)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="475.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiino (4 samples, 0.80%)</title><rect x="10.0" y="993" width="9.4" height="15.0" fill="rgb(243,160,41)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="1003.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opitsk (458 samples, 91.60%)</title><rect x="85.5" y="977" width="1080.9" height="15.0" fill="rgb(239,49,2)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="987.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opitsk</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>D (disk sleep) (3 samples, 0.60%)</title><rect x="19.4" y="1137" width="7.1" height="15.0" fill="rgb(253,108,46)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="1147.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ttcpip (3 samples, 0.60%)</title><rect x="19.4" y="961" width="7.1" height="15.0" fill="rgb(238,10,6)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="971.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfkRequest (2 samples, 0.40%)</title><rect x="99.7" y="289" width="4.7" height="15.0" fill="rgb(235,1,24)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="299.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ssthrdmain (458 samples, 91.60%)</title><rect x="85.5" y="1073" width="1080.9" height="15.0" fill="rgb(221,25,3)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="1083.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ssthrdmain</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdwat_internal (3 samples, 0.60%)</title><rect x="19.4" y="225" width="7.1" height="15.0" fill="rgb(235,10,8)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>read_events (3 samples, 0.60%)</title><rect x="19.4" y="97" width="7.1" height="15.0" fill="rgb(245,30,13)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="107.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfr_lio_listio64 (2 samples, 0.40%)</title><rect x="99.7" y="145" width="4.7" height="15.0" fill="rgb(243,120,12)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opifch2 (21 samples, 4.20%)</title><rect x="36.0" y="641" width="49.5" height="15.0" fill="rgb(233,198,23)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="651.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opifch2</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opimai_real (3 samples, 0.60%)</title><rect x="19.4" y="1057" width="7.1" height="15.0" fill="rgb(244,185,12)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="1067.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opitsk (3 samples, 0.60%)</title><rect x="26.5" y="977" width="7.1" height="15.0" fill="rgb(206,1,20)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="987.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbgtcr (6 samples, 1.20%)</title><rect x="85.5" y="513" width="14.2" height="15.0" fill="rgb(241,46,20)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="523.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>system_call_fastpath (4 samples, 0.80%)</title><rect x="90.2" y="177" width="9.5" height="15.0" fill="rgb(215,193,9)" rx="2" ry="2" />
+<text text-anchor="" x="93.24" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>On CPU (Oracle state) (4 samples, 0.80%)</title><rect x="10.0" y="1153" width="9.4" height="15.0" fill="rgb(227,65,15)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="1163.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbgtcr (21 samples, 4.20%)</title><rect x="36.0" y="529" width="49.5" height="15.0" fill="rgb(214,49,45)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="539.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kcbgtcr</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcb_prefetch (445 samples, 89.00%)</title><rect x="99.7" y="497" width="1050.2" height="15.0" fill="rgb(244,174,26)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="507.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kcb_prefetch</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__libc_start_main (3 samples, 0.60%)</title><rect x="19.4" y="1105" width="7.1" height="15.0" fill="rgb(235,13,1)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="1115.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__blockdev_direct_IO (14 samples, 2.80%)</title><rect x="52.5" y="81" width="33.0" height="15.0" fill="rgb(253,98,30)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="91.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >__..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdblock (3 samples, 0.60%)</title><rect x="26.5" y="241" width="7.1" height="15.0" fill="rgb(215,205,8)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="251.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequestPriv (4 samples, 0.80%)</title><rect x="10.0" y="337" width="9.4" height="15.0" fill="rgb(232,69,46)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="347.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiefn0 (4 samples, 0.80%)</title><rect x="10.0" y="657" width="9.4" height="15.0" fill="rgb(220,160,23)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="667.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdread (6 samples, 1.20%)</title><rect x="85.5" y="465" width="14.2" height="15.0" fill="rgb(233,49,3)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="475.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>psddr0 (3 samples, 0.60%)</title><rect x="26.5" y="769" width="7.1" height="15.0" fill="rgb(233,196,9)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="779.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfospo (443 samples, 88.60%)</title><rect x="104.4" y="177" width="1045.5" height="15.0" fill="rgb(254,112,53)" rx="2" ry="2" />
+<text text-anchor="" x="107.40" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >skgfospo</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (8 samples, 1.60%)</title><rect x="1171.1" y="1009" width="18.9" height="15.0" fill="rgb(226,84,48)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="1019.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transitIO (6 samples, 1.20%)</title><rect x="85.5" y="353" width="14.2" height="15.0" fill="rgb(240,224,2)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="363.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sys_io_submit (2 samples, 0.40%)</title><rect x="99.7" y="97" width="4.7" height="15.0" fill="rgb(245,143,40)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="107.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfd_io (14 samples, 2.80%)</title><rect x="52.5" y="465" width="33.0" height="15.0" fill="rgb(248,98,19)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="475.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ks..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdafRequest (14 samples, 2.80%)</title><rect x="52.5" y="433" width="33.0" height="15.0" fill="rgb(207,224,32)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="443.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ks..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>pfrinstr_EXECC (458 samples, 91.60%)</title><rect x="85.5" y="817" width="1080.9" height="15.0" fill="rgb(248,64,43)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="827.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >pfrinstr_EXECC</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kdsgrp (3 samples, 0.60%)</title><rect x="19.4" y="561" width="7.1" height="15.0" fill="rgb(254,13,43)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="571.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>__libc_start_main (4 samples, 0.80%)</title><rect x="10.0" y="1105" width="9.4" height="15.0" fill="rgb(242,81,19)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="1115.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (8 samples, 1.60%)</title><rect x="1171.1" y="945" width="18.9" height="15.0" fill="rgb(253,77,53)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="955.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdbio (8 samples, 1.60%)</title><rect x="1171.1" y="433" width="18.9" height="15.0" fill="rgb(254,65,32)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="443.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>main (3 samples, 0.60%)</title><rect x="26.5" y="1089" width="7.1" height="15.0" fill="rgb(212,124,37)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="1099.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_start (458 samples, 91.60%)</title><rect x="85.5" y="1121" width="1080.9" height="15.0" fill="rgb(248,80,52)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="1131.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_start</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgmstack (3 samples, 0.60%)</title><rect x="19.4" y="721" width="7.1" height="15.0" fill="rgb(219,8,16)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="731.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opidrv (3 samples, 0.60%)</title><rect x="19.4" y="1025" width="7.1" height="15.0" fill="rgb(217,207,53)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="1035.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_block_ufs (3 samples, 0.60%)</title><rect x="19.4" y="257" width="7.1" height="15.0" fill="rgb(205,37,50)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="267.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qeilsr (6 samples, 1.20%)</title><rect x="85.5" y="561" width="14.2" height="15.0" fill="rgb(254,75,23)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="571.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>psddr0 (458 samples, 91.60%)</title><rect x="85.5" y="769" width="1080.9" height="15.0" fill="rgb(213,14,24)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="779.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >psddr0</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ttcpip (8 samples, 1.60%)</title><rect x="1171.1" y="961" width="18.9" height="15.0" fill="rgb(228,147,26)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="971.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_submit_ufs_io (7 samples, 1.40%)</title><rect x="1149.9" y="305" width="16.5" height="15.0" fill="rgb(242,173,13)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="315.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdread (7 samples, 1.40%)</title><rect x="1149.9" y="481" width="16.5" height="15.0" fill="rgb(219,206,27)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="491.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opidrv (21 samples, 4.20%)</title><rect x="36.0" y="1025" width="49.5" height="15.0" fill="rgb(254,27,15)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="1035.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >opidrv</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sys_pread64 (6 samples, 1.20%)</title><rect x="1152.2" y="177" width="14.2" height="15.0" fill="rgb(248,50,25)" rx="2" ry="2" />
+<text text-anchor="" x="1155.24" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_block (4 samples, 0.80%)</title><rect x="10.0" y="273" width="9.4" height="15.0" fill="rgb(246,115,46)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="283.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzib (7 samples, 1.40%)</title><rect x="1149.9" y="513" width="16.5" height="15.0" fill="rgb(251,207,35)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="523.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfqio (2 samples, 0.40%)</title><rect x="99.7" y="161" width="4.7" height="15.0" fill="rgb(206,183,47)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdread (14 samples, 2.80%)</title><rect x="52.5" y="481" width="33.0" height="15.0" fill="rgb(251,12,42)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="491.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ks..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>plsql_run (3 samples, 0.60%)</title><rect x="19.4" y="865" width="7.1" height="15.0" fill="rgb(235,33,21)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="875.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>rpidrv (21 samples, 4.20%)</title><rect x="36.0" y="753" width="49.5" height="15.0" fill="rgb(225,107,34)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="763.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >rpidrv</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>do_io_submit (2 samples, 0.40%)</title><rect x="99.7" y="81" width="4.7" height="15.0" fill="rgb(208,91,21)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="91.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiino (3 samples, 0.60%)</title><rect x="26.5" y="993" width="7.1" height="15.0" fill="rgb(209,42,22)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="1003.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kpoal8 (3 samples, 0.60%)</title><rect x="26.5" y="929" width="7.1" height="15.0" fill="rgb(232,188,7)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="939.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdbio (8 samples, 1.60%)</title><rect x="1171.1" y="401" width="18.9" height="15.0" fill="rgb(248,71,15)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="411.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdwat_internal (443 samples, 88.60%)</title><rect x="104.4" y="225" width="1045.5" height="15.0" fill="rgb(220,116,37)" rx="2" ry="2" />
+<text text-anchor="" x="107.40" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ksfdwat_internal</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>blkdev_direct_IO (2 samples, 0.40%)</title><rect x="1166.4" y="1025" width="4.7" height="15.0" fill="rgb(246,85,23)" rx="2" ry="2" />
+<text text-anchor="" x="1169.40" y="1035.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiexe (3 samples, 0.60%)</title><rect x="26.5" y="913" width="7.1" height="15.0" fill="rgb(241,208,48)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="923.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opitsk (3 samples, 0.60%)</title><rect x="19.4" y="977" width="7.1" height="15.0" fill="rgb(229,173,28)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="987.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdbio (4 samples, 0.80%)</title><rect x="10.0" y="433" width="9.4" height="15.0" fill="rgb(218,224,50)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="443.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdss_bio (445 samples, 89.00%)</title><rect x="99.7" y="417" width="1050.2" height="15.0" fill="rgb(253,98,49)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="427.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ksfdss_bio</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcb_prefetch (8 samples, 1.60%)</title><rect x="1171.1" y="497" width="18.9" height="15.0" fill="rgb(234,41,50)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="507.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>blkdev_aio_read (6 samples, 1.20%)</title><rect x="1152.2" y="129" width="14.2" height="15.0" fill="rgb(229,9,0)" rx="2" ry="2" />
+<text text-anchor="" x="1155.24" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qetlbr (3 samples, 0.60%)</title><rect x="26.5" y="577" width="7.1" height="15.0" fill="rgb(240,220,21)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="587.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgmstack (4 samples, 0.80%)</title><rect x="10.0" y="721" width="9.4" height="15.0" fill="rgb(232,25,26)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="731.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfqio (7 samples, 1.40%)</title><rect x="1149.9" y="225" width="16.5" height="15.0" fill="rgb(206,65,24)" rx="2" ry="2" />
+<text text-anchor="" x="1152.88" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kdsgrp (3 samples, 0.60%)</title><rect x="26.5" y="561" width="7.1" height="15.0" fill="rgb(218,162,33)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="571.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sou2o (4 samples, 0.80%)</title><rect x="10.0" y="1041" width="9.4" height="15.0" fill="rgb(253,62,38)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="1051.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qertbFetchByRowID (21 samples, 4.20%)</title><rect x="36.0" y="593" width="49.5" height="15.0" fill="rgb(213,64,7)" rx="2" ry="2" />
+<text text-anchor="" x="38.96" y="603.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >qertb..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdblock (443 samples, 88.60%)</title><rect x="104.4" y="241" width="1045.5" height="15.0" fill="rgb(207,116,42)" rx="2" ry="2" />
+<text text-anchor="" x="107.40" y="251.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ksfdblock</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcfprd1 (5 samples, 1.00%)</title><rect x="40.7" y="449" width="11.8" height="15.0" fill="rgb(242,212,38)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="459.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfdblock (5 samples, 1.00%)</title><rect x="40.7" y="241" width="11.8" height="15.0" fill="rgb(229,179,21)" rx="2" ry="2" />
+<text text-anchor="" x="43.68" y="251.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbzibmlt (3 samples, 0.60%)</title><rect x="19.4" y="465" width="7.1" height="15.0" fill="rgb(246,171,27)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="475.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_start (3 samples, 0.60%)</title><rect x="26.5" y="1121" width="7.1" height="15.0" fill="rgb(221,93,21)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="1131.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (4 samples, 0.80%)</title><rect x="10.0" y="1009" width="9.4" height="15.0" fill="rgb(220,45,33)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="1019.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (3 samples, 0.60%)</title><rect x="19.4" y="945" width="7.1" height="15.0" fill="rgb(254,102,38)" rx="2" ry="2" />
+<text text-anchor="" x="22.44" y="955.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfrwat (3 samples, 0.60%)</title><rect x="26.5" y="193" width="7.1" height="15.0" fill="rgb(254,19,50)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_io1 (14 samples, 2.80%)</title><rect x="52.5" y="337" width="33.0" height="15.0" fill="rgb(241,29,10)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="347.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kf..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transit_waitIO (3 samples, 0.60%)</title><rect x="26.5" y="289" width="7.1" height="15.0" fill="rgb(243,136,19)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="299.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_submit_io (6 samples, 1.20%)</title><rect x="85.5" y="305" width="14.2" height="15.0" fill="rgb(239,211,26)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="315.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfrliopo (443 samples, 88.60%)</title><rect x="104.4" y="161" width="1045.5" height="15.0" fill="rgb(254,112,12)" rx="2" ry="2" />
+<text text-anchor="" x="107.40" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >skgfrliopo</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_transitIO (8 samples, 1.60%)</title><rect x="1171.1" y="305" width="18.9" height="15.0" fill="rgb(233,118,21)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="315.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>sou2o (3 samples, 0.60%)</title><rect x="26.5" y="1041" width="7.1" height="15.0" fill="rgb(251,91,16)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="1051.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opidrv (3 samples, 0.60%)</title><rect x="26.5" y="1025" width="7.1" height="15.0" fill="rgb(225,179,48)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="1035.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>skgfrliopo (3 samples, 0.60%)</title><rect x="26.5" y="161" width="7.1" height="15.0" fill="rgb(254,40,35)" rx="2" ry="2" />
+<text text-anchor="" x="29.52" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>qertbFetchByRowID (458 samples, 91.60%)</title><rect x="85.5" y="593" width="1080.9" height="15.0" fill="rgb(209,228,45)" rx="2" ry="2" />
+<text text-anchor="" x="88.52" y="603.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >qertbFetchByRowID</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>opiodr (8 samples, 1.60%)</title><rect x="1171.1" y="689" width="18.9" height="15.0" fill="rgb(207,142,36)" rx="2" ry="2" />
+<text text-anchor="" x="1174.12" y="699.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>ksfd_skgfqio (14 samples, 2.80%)</title><rect x="52.5" y="241" width="33.0" height="15.0" fill="rgb(226,56,8)" rx="2" ry="2" />
+<text text-anchor="" x="55.48" y="251.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >ks..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfioRequest (4 samples, 0.80%)</title><rect x="10.0" y="353" width="9.4" height="15.0" fill="rgb(228,136,28)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="363.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kfk_submit_io (2 samples, 0.40%)</title><rect x="99.7" y="257" width="4.7" height="15.0" fill="rgb(213,72,1)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="267.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>kcbgtcr (452 samples, 90.40%)</title><rect x="99.7" y="529" width="1066.7" height="15.0" fill="rgb(248,1,21)" rx="2" ry="2" />
+<text text-anchor="" x="102.68" y="539.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >kcbgtcr</text>
+</g>
+</svg>
