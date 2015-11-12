@@ -51,8 +51,8 @@ cat ora_stack_slob_test.txt| ../FlameGraph/stackcollapse-stap.pl|../FlameGraph/f
 
 Additional data processing for improved graphs:
 
-cat ora_stack_slob_test.txt| grep -v 0xffffffffffffffff | sed 's/State:\t//g'| sed 's/\[<.*>] //g' | \
-sed -f oracle_scripts/eventsname.sed | ../FlameGraph/stackcollapse-stap.pl | \
+cat ora_stack_slob_test.txt| grep -v 0xffffffffffffffff | sed -f oracle_scripts/eventsname.sed | \
+../FlameGraph/stackcollapse-stap.pl | \
 ../FlameGraph/flamegraph.pl --title "Kernel stack, OS State and Wait event profiling" > stack_profile_edited.svg
 
 

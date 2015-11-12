@@ -35,7 +35,7 @@ Example of usage:
 
 2. Run stack sampling. Example:
 
-./ora_kstackprofiler --pid 1234 --delay 500 --count 100 > my_stack_sample.txt
+./ptrace_profiler --pid 1234 --delay 500 --count 100 > my_stack_sample.txt
 
 3. Process the output with flame graphs for visualization - https://github.com/brendangregg/FlameGraph
 
@@ -62,17 +62,16 @@ OS pid = 1234, ksuseopc = 5796061762, ksusetim = 5796061792
 
 Example of the command line:
 
-./ora_kstackprofiler --pid 1234 --delay 100 --count 1000 --ksuseopc 5796061762 --ksusetim 5796061792 > ora_slob_slowio_userspace3.txt
+./ptrace_profiler --pid 1234 --delay 100 --count 1000 --ksuseopc 5796061762 --ksusetim 5796061792 > ora_userspace.txt
 
 3b. Process the output with flame graphs for visualization - https://github.com/brendangregg/FlameGraph
 
 Examples :
-cat my_stack_ora_sample.txt| ../FlameGraph/stackcollapse-stap.pl|../FlameGraph/flamegraph.pl > ora_stack_slob_test_vanilla.svg
+cat ora_userspace.txt| ../FlameGraph/stackcollapse-stap.pl|../FlameGraph/flamegraph.pl > ora_userspace_vanilla.svg
 
 Additional data processing for improved graphs:
 
-cat my_stack_ora_sample.txt| grep -v 0xffffffffffffffff | sed 's/State:\t//g'| sed 's/\[<.*>] //g' | \
-sed -f oracle_scripts/eventsname.sed | ../FlameGraph/stackcollapse-stap.pl | \
-../FlameGraph/flamegraph.pl --title "Kernel stack, OS State and Wait event profiling" > ora_slob_slowio_userspace3.svg
+cat ora_userspace.txt| sed -f oracle_scripts/eventsname.sed | ../FlameGraph/stackcollapse-stap.pl | \
+../FlameGraph/flamegraph.pl --title "Kernel and Userspace stack, OS State and Wait event profiling" > ora_userspace_edited.svg
 
 
