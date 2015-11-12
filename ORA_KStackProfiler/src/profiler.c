@@ -37,11 +37,11 @@ int read_ksuse(int pid, int *ksuseopc_addr, int *ksusetim_addr)
     ksusetim=*(int *) buf2;
 
  /* X$KSUSE.ksusetim is the time in microseconds since last wait. 
- *  *  When X$KSUSE.ksusetim >0 the session is not waiting 
- *   *  ignore edge cases of sessions transitioning state, 
- *    *  i.e. X$KSUSE.ksusetim=0 (musec) and process just switched on CPU 
- *     *  This is a workaround as one should rather check X$KSLWT.KSLWTINWAIT
- *      */
+ *  When X$KSUSE.ksusetim >0 the session is not waiting 
+ *  ignore edge cases of sessions transitioning state, 
+ *  i.e. X$KSUSE.ksusetim=0 (musec) and process just switched on CPU 
+ *  This is a workaround as one should rather check X$KSLWT.KSLWTINWAIT
+ */
 
     if (ksusetim>0) {
         return 0; /* on CPU */
