@@ -2,9 +2,10 @@
  * ora_kstackprofiler - a simple kernel stack profiler extended with 
  *                      the option to add Oracle wait event profiling from SGA
  *
- *                      Author: Luca.Canali@cern.ch
- *                      Created: November 2015
- *                      */
+ * Author: Luca.Canali@cern.ch
+ * Created: November 2015
+ * 
+ */
 
 #include <stdio.h>
 #include <stdlib.h>

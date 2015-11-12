@@ -2,15 +2,15 @@
  * ptrace_profiler - a simple stack profiler for userspace and kernel stack extended with 
  *                    the option to add Oracle wait event information from SGA
  *                     
- *                     Author: Luca.Canali@cern.ch
- *                     Created: November 2015
+ * Author: Luca.Canali@cern.ch
+ * Created: November 2015
  *
- *                     Notes and dependencies:
- *                         - requires libunwind and libunwind-devel
- *                             - if you are compiling libunwind from source, you may need to set:
- *                                   export LD_LIBRARY_PATH=/usr/local/lib
+ * Notes and dependencies:
+ *    - requires libunwind and libunwind-devel
+ *    - if you are compiling libunwind from source, you may need to set:
+ *      export LD_LIBRARY_PATH=/usr/local/lib
  *
- *                                    */
+ */
 
 #include <signal.h>
 #include <stdio.h>
