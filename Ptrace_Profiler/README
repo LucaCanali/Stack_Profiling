@@ -35,7 +35,7 @@ Example of usage:
 
 2. Run stack sampling. Example:
 
-./ptrace_profiler --pid 1234 --delay 500 --count 100 > my_stack_sample.txt
+./ptrace_profiler --pid 1234 --delay 500 --count 200 > my_stack_sample.txt
 
 3. Process the output with flame graphs for visualization - https://github.com/brendangregg/FlameGraph
 
@@ -62,7 +62,7 @@ OS pid = 1234, ksuseopc = 5796061762, ksusetim = 5796061792
 
 Example of the command line:
 
-./ptrace_profiler --pid 1234 --delay 100 --count 1000 --ksuseopc 5796061762 --ksusetim 5796061792 > ora_userspace.txt
+./ptrace_profiler --pid 1234 --delay 500 --count 200 --ksuseopc 5796061762 --ksusetim 5796061792 > ora_userspace.txt
 
 3b. Process the output with flame graphs for visualization - https://github.com/brendangregg/FlameGraph
 

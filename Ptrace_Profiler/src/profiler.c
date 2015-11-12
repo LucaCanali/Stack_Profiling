@@ -98,21 +98,16 @@ int stack_profile(int pid, int sleep_micro, int num_samples, int *ksuseopc_addr,
 {
    int i;
    int event;
-   char command_stack[128];
    char command_status[128];
    
-   sprintf(command_stack, "cat /proc/%d/stack > /dev/null", pid);
-   sprintf(command_status, "cat /proc/%d/status > /dev/null", pid);
-   
+   sprintf(command_status, "grep -m 1 State /proc/%d/status", pid);
+  
     if (unwind_initialize(pid) < 0)  
         return -1;
 
-   for (i=0; i < num_samples; i++) {
+    for (i=0; i < num_samples; i++) {
 
         /* note, data collection is not atomic, this can introduce errors */
-
-        if (gather_proc_status(pid) < 0)
-            return -1;
 
         /* optionally read Oracle wait event info if the addresses are provided */
         if ((ksuseopc_addr != NULL) &&  (ksusetim_addr != NULL)) 
@@ -133,7 +128,11 @@ int stack_profile(int pid, int sleep_micro, int num_samples, int *ksuseopc_addr,
         if (detach_process(pid) < 0)
            return -1;
       
-        puts(process_status);
+        /* Spawning reads of /proc/pid from external processes seems to improve accuracy       */
+        /* Otherwise spurious R state are measured. This is a workaround, yet to be understood */
+        fflush(stdout);
+        if (system(command_status) != 0)  
+            exit(-1);
         
         if ((ksuseopc_addr != NULL) &&  (ksusetim_addr != NULL))    
             if (event > 0) 
@@ -143,13 +142,7 @@ int stack_profile(int pid, int sleep_micro, int num_samples, int *ksuseopc_addr,
 
         /* this is needed to post process the output with FlameGraph/stackcollapse-stap.pl */   
         printf("1\n\n");
-        
-        /* spawning reads of /proc/pid from external shell processes seems to improve accuracy  */
-        /* This is a workaround, yet to be understood for a future version */
-        if (system(command_stack) != 0)   /* read kernel stack */
-            exit(-1);
-        if (system(command_status) != 0)  
-            exit(-1);
+        fflush(stdout);
 
         usleep(sleep_micro);
     }      
@@ -157,5 +150,6 @@ int stack_profile(int pid, int sleep_micro, int num_samples, int *ksuseopc_addr,
     unwind_cleanup();   
     return 0;
 }
+
 
 
