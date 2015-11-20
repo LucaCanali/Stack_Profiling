@@ -7,20 +7,22 @@ Created: November 2015
 See README files in each directory for further details
 
 - KStackSampler 
-  -> a simple kernel stack profiler
-     http://externaltable.blogspot.com/2015/10/linux-kernel-stack-profiling-and-flame.html
-     Use to investigate processes that are often Off-CPU/Kernel-busy 
-     Use together with Flame Graphs
+  a simple kernel stack profiler
+  http://externaltable.blogspot.com/2015/10/linux-kernel-stack-profiling-and-flame.html
+  Use to investigate processes that are often Off-CPU/Kernel-busy 
+  Use together with Flame Graphs
 
 - ORA_KStackProfiler 
-  -> a simple kernel stack profiler extended with the option of sampling Oracle wait
-     event information from SGA
-     Use to drill down into Oracle wait events and troubleshoot processes that are often Off-CPU/Kernel-busy 
-     Use together with Flame Graphs
+  a simple kernel stack profiler extended with the option of sampling Oracle wait
+  event information from SGA
+  http://externaltable.blogspot.com/2015/11/oracle-wait-events-investigated-with.html
+  Use to drill down into Oracle wait events and/or to troubleshoot processes that are 
+  often Off-CPU/Kernel-busy 
+  Use together with Flame Graphs
 
 - Ptrace_Profiler
-  -> a simple stack profiler for userspace and kernel stack extended with the option of 
-     sampling Oracle wait event
-     Use to drill down into process execution (both userspace and kernel)
-     Use together with Flame Graphs
+  a simple stack profiler for userspace and kernel stack extended with the option of 
+  sampling Oracle wait event
+  Use to drill down into process execution (both userspace and kernel)
+  Use together with Flame Graphs
 
