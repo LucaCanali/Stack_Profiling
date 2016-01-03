@@ -3,8 +3,7 @@ for Linux process troubleshooting and Oracle troubleshooting.
  
 Author Luca.Canali@cern.ch
 Created: November 2015
-
-See README files in each directory for further details
+http://externaltable.blogspot.com/2015/12/extended-stack-profiling-ideas-tools.html
 
 - KStackSampler 
   a simple kernel stack profiler
@@ -25,4 +24,7 @@ See README files in each directory for further details
   sampling Oracle wait event
   Use to drill down into process execution (both userspace and kernel)
   Use together with Flame Graphs
+
+See README files in each directory for further details.
+
 
